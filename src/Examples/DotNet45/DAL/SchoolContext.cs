@@ -32,6 +32,15 @@ namespace ContosoUniversity.DAL
                     .ToTable("CourseInstructor"));
 
             modelBuilder.Entity<Department>().MapToStoredProcedures();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            // your code here
+
+            return base.SaveChanges();
         }
     }
 }
