@@ -126,7 +126,7 @@ In case you use, for example, GUID for the Id property, most probably you genera
 ```cs
 public SchoolContext()
 {
-	IdGeneratedByDatabase = false;
+    IdGeneratedByDatabase = false;
 }
 ```
 
