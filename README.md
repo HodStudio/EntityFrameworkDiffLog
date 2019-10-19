@@ -77,7 +77,7 @@ In case you have some configuration about the table name or schema name, change 
 ```cs
 public SchoolContext()
 {
-    LogEntriesTableName = "LogsEntries";
+    LogEntriesTableName = "LogEntries";
     LogEntriesSchemaName = "dbo";
 }
 ```

@@ -8,7 +8,7 @@ namespace ContosoUniversity.Data
     {
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
         {
-            LogEntriesTableName = "LogsEntries";
+            LogEntriesTableName = "LogEntries";
             LogEntriesSchemaName = "dbo";
         }
 

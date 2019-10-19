@@ -154,7 +154,7 @@ namespace ContosoUniversity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LogsEntries","dbo");
+                    b.ToTable("LogEntries","dbo");
                 });
 
             modelBuilder.Entity("ContosoUniversity.Models.Instructor", b =>

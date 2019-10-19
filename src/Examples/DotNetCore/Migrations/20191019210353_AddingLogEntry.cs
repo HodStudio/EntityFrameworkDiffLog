@@ -11,7 +11,7 @@ namespace ContosoUniversity.Migrations
                 name: "dbo");
 
             migrationBuilder.CreateTable(
-                name: "LogsEntries",
+                name: "LogEntries",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -25,14 +25,14 @@ namespace ContosoUniversity.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LogsEntries", x => x.Id);
+                    table.PrimaryKey("PK_LogEntries", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LogsEntries",
+                name: "LogEntries",
                 schema: "dbo");
         }
     }
