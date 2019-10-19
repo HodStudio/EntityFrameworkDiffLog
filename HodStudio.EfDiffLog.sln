@@ -5,7 +5,12 @@ VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{3FF000AD-B6E8-47EC-80BF-83606A879061}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HodStudio.EfDiffLog", "src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj", "{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EfDiffLog", "src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj", "{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6B90C5F8-F5C0-4CFE-A6DB-F1B2AD5F433A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
