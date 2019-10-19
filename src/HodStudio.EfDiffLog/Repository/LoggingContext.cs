@@ -62,38 +62,78 @@ namespace HodStudio.EfDiffLog.Repository
 
             foreach (var item in changes)
             {
-                var entityType = GetEntityType(item.Entity.GetType());
-
-                var original = emptyJson;
-                
-                var updated = GetValues(item.CurrentValues);
-                var creationDate = DateTime.Now;
-                var idColumnName = IdColumnNames[entityType.Name];
-
-                if (item.State == EntityState.Modified)
+                if (context.IdGeneratedByDatabase &&
+                    item.State == EntityState.Added)
                 {
-                    var dbValues = asyncOperation ? await item.GetDatabaseValuesAsync() : item.GetDatabaseValues();
-                    original = GetValues(dbValues);
+                    context.AddedEntities.Add(item);
+                    continue;
                 }
 
-                string jsonDiff = jdp.Diff(original, updated);
+                await CreateLogEntry(context, userId, asyncOperation, logTime, jdp, item.State, item);
+            }
+        }
 
-                if (string.IsNullOrWhiteSpace(jsonDiff) == false)
+        internal static void LogChangesAddedEntities(this LoggingDbContext context, string userId)
+            => LogChangesAddedEntitiesAsync(context, userId, false).GetAwaiter().GetResult();
+
+        internal static async Task LogChangesAddedEntitiesAsync(this LoggingDbContext context, string userId)
+            => await LogChangesAsync(context, userId, true);
+
+        private static async Task LogChangesAddedEntitiesAsync(this LoggingDbContext context, string userId, bool asyncOperation)
+        {
+            var logTime = DateTime.Now;
+            var jdp = new JsonDiffPatch();
+
+            foreach (var item in context.AddedEntities)
+            {
+                await CreateLogEntry(context, userId, asyncOperation, logTime, jdp, EntityState.Added, item);
+            }
+        }
+
+        private static async Task CreateLogEntry(
+            LoggingDbContext context,
+            string userId,
+            bool asyncOperation,
+            DateTime logTime,
+            JsonDiffPatch jdp,
+            EntityState state,
+#if NETSTANDARD
+            EntityEntry item
+#else
+            DbEntityEntry item
+#endif
+            )
+        {
+            var entityType = GetEntityType(item.Entity.GetType());
+
+            var original = emptyJson;
+
+            var updated = GetValues(item.CurrentValues);
+            var idColumnName = IdColumnNames[entityType.Name];
+
+            if (state == EntityState.Modified)
+            {
+                var dbValues = asyncOperation ? await item.GetDatabaseValuesAsync() : item.GetDatabaseValues();
+                original = GetValues(dbValues);
+            }
+
+            string jsonDiff = jdp.Diff(original, updated);
+
+            if (string.IsNullOrWhiteSpace(jsonDiff) == false)
+            {
+                var EntityDiff = JToken.Parse(jsonDiff).ToString(Formatting.None);
+
+                var logEntry = new LogEntry()
                 {
-                    var EntityDiff = JToken.Parse(jsonDiff).ToString(Formatting.None);
+                    EntityName = entityType.Name,
+                    EntityId = item.CurrentValues[idColumnName].ToString(),
+                    LogDateTime = logTime,
+                    Operation = state.ToString(),
+                    UserId = userId,
+                    ValuesChanges = EntityDiff,
+                };
 
-                    var logEntry = new LogEntry()
-                    {
-                        EntityName = entityType.Name,
-                        EntityId = item.CurrentValues[idColumnName].ToString(),
-                        LogDateTime = logTime,
-                        Operation = item.State.ToString(),
-                        UserId = userId,
-                        ValuesChanges = EntityDiff,
-                    };
-
-                    context.LogEntries.Add(logEntry);
-                }
+                context.LogEntries.Add(logEntry);
             }
         }
 
@@ -108,6 +148,8 @@ namespace HodStudio.EfDiffLog.Repository
             return null;
         }
 
+        private static string SerializeDictionary(Dictionary<string, object> pairs) => JsonConvert.SerializeObject(pairs);
+
 #if NETSTANDARD
         private static string GetValues(PropertyValues propertyValues)
         {
@@ -121,6 +163,5 @@ namespace HodStudio.EfDiffLog.Repository
             return SerializeDictionary(pairs);
         }
 #endif
-        private static string SerializeDictionary(Dictionary<string, object> pairs) => JsonConvert.SerializeObject(pairs);
     }
 }

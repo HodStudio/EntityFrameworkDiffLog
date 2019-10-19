@@ -5,12 +5,13 @@ using System.Data.Common;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace HodStudio.EfDiffLog.Repository
 {
     public partial class LoggingDbContext : DbContext
     {
-
+        internal List<DbEntityEntry> AddedEntities { get; set; } = new List<DbEntityEntry>();
         protected LoggingDbContext()
         {
         }
@@ -48,7 +49,13 @@ namespace HodStudio.EfDiffLog.Repository
         public override Task<int> SaveChangesAsync()
         {
             this.LogChanges(UserId);
-            return base.SaveChangesAsync();
+            var result = base.SaveChangesAsync();
+            if (IdGeneratedByDatabase)
+            {
+                this.LogChangesAddedEntitiesAsync(UserId);
+                result = base.SaveChangesAsync();
+            }
+            return result;
         }
     }
 }
