@@ -45,10 +45,10 @@ namespace HodStudio.EfDiffLog.Repository
             }
         }
 
-        public static void LogChanges(this LoggingDbContext context, string userId)
+        internal static void LogChanges(this LoggingDbContext context, string userId)
             => LogChangesAsync(context, userId, false).GetAwaiter().GetResult();
 
-        public static async Task LogChangesAsync(this LoggingDbContext context, string userId)
+        internal static async Task LogChangesAsync(this LoggingDbContext context, string userId)
             => await LogChangesAsync(context, userId, true);
 
         private static async Task LogChangesAsync(this LoggingDbContext context, string userId, bool asyncOperation)
