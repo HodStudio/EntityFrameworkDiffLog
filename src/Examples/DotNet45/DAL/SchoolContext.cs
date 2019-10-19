@@ -1,10 +1,11 @@
 ﻿using ContosoUniversity.Models;
+using HodStudio.EfDiffLog.Repository;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace ContosoUniversity.DAL
 {
-    public class SchoolContext : DbContext
+    public class SchoolContext : LoggingDbContext
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Department> Departments { get; set; }
