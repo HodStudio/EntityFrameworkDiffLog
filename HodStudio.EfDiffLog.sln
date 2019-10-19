@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{11C0CC5F-2B9D-4E34-8757-0CA3C96CAFA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity_DotNet45", "src\Examples\DotNet45\ContosoUniversity_DotNet45.csproj", "{264E21D6-4024-4A53-B1BE-1CD42F3348FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,12 +26,17 @@ Global
 		{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4} = {3FF000AD-B6E8-47EC-80BF-83606A879061}
+		{264E21D6-4024-4A53-B1BE-1CD42F3348FE} = {11C0CC5F-2B9D-4E34-8757-0CA3C96CAFA1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86726FBC-4F6D-468F-85B8-99C7DA7DC1D7}
