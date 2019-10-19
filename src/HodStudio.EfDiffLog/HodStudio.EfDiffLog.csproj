@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>HodStudio.EfDiffLog</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>Cussa</Authors>
+    <Company>HodStudio</Company>
+    <Description>An easy way to create entity changes' log.</Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/HodStudio/EfDiffLog/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/HodStudio/EfDiffLog/</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/HodStudio/EfDiffLog/raw/master/EfDiffLogIcon.png?raw=true</PackageIconUrl>
+    <RepositoryUrl>https://github.com/HodStudio/EfDiffLog/</RepositoryUrl>
+    <PackageTags>EntityFramework;EF;Database;Logging;DifferencialLog;O/RM;ADO.NET;HodStudio</PackageTags>
+    <RepositoryType>GitHub</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="EntityFramework" Version="6.3.0" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
+    <DefineConstants>NET45;NETFULL</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsonDiffPatch.Net" Version="2.1.0" />
+  </ItemGroup>
+
+</Project>
