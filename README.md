@@ -19,7 +19,10 @@ After installing the library via NuGet, you need to do some modiffications.
 
 ### Include the `LoggedEntity` on your Entities
 To know which entities will generate the change logs, the EfDiffLog will use the `LoggedEntity` attribute to execute it.
+If you use the attribute without providing the property name, it will use the default ("Id"). Pay attention that it's case sensitive.
 ```cs
+using HodStudio.EfDiffLog.Model;
+
 [LoggedEntity]
 public class User
 {
@@ -30,6 +33,8 @@ public class User
 
 In case you have an entity which the Id property is not named "Id", you can use the overload.
 ```cs
+using HodStudio.EfDiffLog.Model;
+
 [LoggedEntity("UserId")]
 public class User
 {
@@ -38,18 +43,67 @@ public class User
 }
 ```
 
+To avoid problems, especially during renames, we recommend using the `nameof` to configure the property name.
+```cs
+using HodStudio.EfDiffLog.Model;
+
+[LoggedEntity(nameof(UserId))]
+public class User
+{
+	public int UserId { get; set; }
+	public string UserName { get; set; }
+}
+```
+
+### Initialize the Dictionary of LoggedEntities
+To have a better performance, we create a dictionary with the entities that will be logged and keep it. To do that, initialize the dictionary during the start of the app using the following method:
+```cs
+using System.Reflection;
+using HodStudio.EfDiffLog.Repository;
+
+LoggingContext.InitializeIdColumnNames(Assembly.GetEntryAssembly());
+```
+
+In case your models are stored in another assembly (or assemblies), just pass them to this parameter.
+
 ### Change your DbContext
 To be able to use the full power of EfDiffLog, the easiest way is to inherits your DbContext from LoggingDbContext.
 ```cs
 public class ApplicationDbContext : LoggingDbContext
 ```
 
-Our LoggingDbContext has a new parameter constructor: it receives an params list of assemblies where your model is defined, and it will be used to find the entities that has the `LoggedEntity` property defined.
+#### Change the LogEntries table name
+In case you have some configuration about the table name or schema name, change the properties `LogEntriesTableName` and `LogEntriesSchemaName`.
 ```cs
-public class ApplicationDbContext : LoggingDbContext
+public SchoolContext()
 {
-	public ApplicationDbContext() : base() { }
+    LogEntriesTableName = "LogsEntries";
+    LogEntriesSchemaName = "dbo";
 }
+```
+
+#### Special attention to override methods
+In case you have some override on your DbContext class, make sure you call the `base`, to execute the methods from the `LoggingDbContext`.
+```cs
+protected override void OnModelCreating(DbModelBuilder modelBuilder)
+{
+	// your code here
+
+    base.OnModelCreating(modelBuilder);
+}
+
+public override int SaveChanges()
+{
+    // your code here
+
+    return base.SaveChanges();
+}
+```
+
+### Add Migration to generate the LogEntry Database and Update the database
+```
+Add-Migration AddLogEntries
+Update-Database
 ```
 
 ## Documentation
