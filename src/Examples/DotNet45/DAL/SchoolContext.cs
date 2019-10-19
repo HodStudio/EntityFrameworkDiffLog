@@ -7,6 +7,12 @@ namespace ContosoUniversity.DAL
 {
     public class SchoolContext : LoggingDbContext
     {
+        public SchoolContext()
+        {
+            LogEntriesTableName = "LogEntries";
+            LogEntriesSchemaName = "dbo";
+        }
+
         public DbSet<Course> Courses { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
