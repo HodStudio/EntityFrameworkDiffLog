@@ -87,7 +87,7 @@ In case you have some override on your DbContext class, make sure you call the `
 ```cs
 protected override void OnModelCreating(DbModelBuilder modelBuilder)
 {
-	// your code here
+    // your code here
 
     base.OnModelCreating(modelBuilder);
 }
@@ -116,6 +116,17 @@ public override int SaveChanges()
     UserId = System.Threading.Thread.CurrentPrincipal.Identity.Name;
 
     return base.SaveChanges();
+}
+```
+
+### Configure the type of id used on your project
+In most of the cases, the id is generated on the database. This creates a problem that the id on the logs would be always as zero. So, to avoid this, we introduced the property IdGeneratedByDatabase. In case of true (default), the log for added entities will only be done after the first SaveChanges.
+Realize, please that it will generate two SaveChanges to database: one for the entities itself + updated entities' logs + deleted entities' log and another for the added entities' logs.
+In case you use, for example, GUID for the Id property, most probably you generate it on the application itself. In that case, you can turn off this functionality. It will execute only one SaveChanges in that case.
+```cs
+public SchoolContext()
+{
+	IdGeneratedByDatabase = false;
 }
 ```
 
