@@ -1,10 +1,12 @@
-﻿using System;
+﻿using HodStudio.EfDiffLog.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ContosoUniversity.Models
 {
+    [LoggedEntity(nameof(DepartmentID))]
     public class Department
     {
         public int DepartmentID { get; set; }

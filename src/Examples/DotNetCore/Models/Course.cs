@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using HodStudio.EfDiffLog.Model;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ContosoUniversity.Models
 {
+    [LoggedEntity(nameof(CourseID))]
     public class Course
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
