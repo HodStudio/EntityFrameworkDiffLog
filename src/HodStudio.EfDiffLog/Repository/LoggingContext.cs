@@ -24,17 +24,20 @@ namespace HodStudio.EfDiffLog.Repository
         private const string emptyJson = "{}";
         private static Dictionary<string, string> IdColumnNames = new Dictionary<string, string>();
 
-        public static void InitializeIdColumnNames(this LoggingDbContext context, Assembly assembly)
+        public static void InitializeIdColumnNames(params Assembly[] assemblies)
         {
-            foreach (Type type in assembly.GetTypes())
+            foreach (var assembly in assemblies)
             {
-                if (type.GetCustomAttributes(typeof(LoggedEntityAttribute), true).Length > 0)
+                foreach (Type type in assembly.GetTypes())
                 {
-                    if (IdColumnNames.ContainsKey(type.Name))
-                        throw new AmbiguousMatchException($"More than one entity with the same name ({type.Name}) using the LoggedEntityAttribute.");
+                    if (type.GetCustomAttributes(typeof(LoggedEntityAttribute), true).Length > 0)
+                    {
+                        if (IdColumnNames.ContainsKey(type.Name))
+                            throw new AmbiguousMatchException($"More than one entity with the same name ({type.Name}) using the LoggedEntityAttribute.");
 
-                    var attributeValue = ((LoggedEntityAttribute)Attribute.GetCustomAttribute(type.GetType(), typeof(LoggedEntityAttribute))).IdPropertyName;
-                    IdColumnNames.Add(type.Name, attributeValue);
+                        var attributeValue = ((LoggedEntityAttribute)Attribute.GetCustomAttribute(type.GetType(), typeof(LoggedEntityAttribute))).IdPropertyName;
+                        IdColumnNames.Add(type.Name, attributeValue);
+                    }
                 }
             }
         }
