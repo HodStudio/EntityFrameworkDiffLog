@@ -28,6 +28,9 @@ namespace HodStudio.EfDiffLog.Repository
         {
             foreach (var assembly in assemblies)
             {
+                if (assembly == null)
+                    throw new ArgumentNullException(nameof(assembly));
+
                 foreach (Type type in assembly.GetTypes())
                 {
                     if (type.GetCustomAttributes(typeof(LoggedEntityAttribute), true).Length > 0)
@@ -35,7 +38,7 @@ namespace HodStudio.EfDiffLog.Repository
                         if (IdColumnNames.ContainsKey(type.Name))
                             throw new AmbiguousMatchException($"More than one entity with the same name ({type.Name}) using the LoggedEntityAttribute.");
 
-                        var attributeValue = ((LoggedEntityAttribute)Attribute.GetCustomAttribute(type.GetType(), typeof(LoggedEntityAttribute))).IdPropertyName;
+                        var attributeValue = ((LoggedEntityAttribute)type.GetCustomAttribute(typeof(LoggedEntityAttribute))).IdPropertyName;
                         IdColumnNames.Add(type.Name, attributeValue);
                     }
                 }
