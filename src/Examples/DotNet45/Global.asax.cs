@@ -7,6 +7,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using ContosoUniversity.DAL;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Reflection;
+using HodStudio.EfDiffLog.Repository;
 
 namespace ContosoUniversity
 {
@@ -20,6 +22,7 @@ namespace ContosoUniversity
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbInterception.Add(new SchoolInterceptorTransientErrors());
             DbInterception.Add(new SchoolInterceptorLogging());
+            LoggingContext.InitializeIdColumnNames(Assembly.GetExecutingAssembly());
         }
     }
 }
