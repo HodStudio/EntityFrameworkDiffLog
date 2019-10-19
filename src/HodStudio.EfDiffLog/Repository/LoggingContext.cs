@@ -56,17 +56,19 @@ namespace HodStudio.EfDiffLog.Repository
             var logTime = DateTime.Now;
             var changes = context.ChangeTracker.Entries()
                             .Where(x => entityStates.Contains(x.State)
-                                && IdColumnNames.ContainsKey(x.Entity.GetType().Name))
+                                && GetEntityType(x.Entity.GetType()) != null)
                             .ToList();
             var jdp = new JsonDiffPatch();
 
             foreach (var item in changes)
             {
-                var original = emptyJson;
+                var entityType = GetEntityType(item.Entity.GetType());
 
+                var original = emptyJson;
+                
                 var updated = GetValues(item.CurrentValues);
                 var creationDate = DateTime.Now;
-                var idColumnName = IdColumnNames[item.GetType().Name];
+                var idColumnName = IdColumnNames[entityType.Name];
 
                 if (item.State == EntityState.Modified)
                 {
@@ -82,7 +84,7 @@ namespace HodStudio.EfDiffLog.Repository
 
                     var logEntry = new LogEntry()
                     {
-                        EntityName = item.Entity.GetType().Name,
+                        EntityName = entityType.Name,
                         EntityId = item.CurrentValues[idColumnName].ToString(),
                         LogDateTime = logTime,
                         Operation = item.State.ToString(),
@@ -93,6 +95,17 @@ namespace HodStudio.EfDiffLog.Repository
                     context.LogEntries.Add(logEntry);
                 }
             }
+        }
+
+        private static Type GetEntityType(Type entityType)
+        {
+            if (IdColumnNames.ContainsKey(entityType.Name))
+                return entityType;
+
+            if (entityType.BaseType != null)
+                return GetEntityType(entityType.BaseType);
+
+            return null;
         }
 
 #if NETSTANDARD
