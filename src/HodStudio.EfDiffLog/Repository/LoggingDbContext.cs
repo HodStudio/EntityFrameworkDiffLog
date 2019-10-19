@@ -59,7 +59,7 @@ namespace HodStudio.EfDiffLog.Repository
 #if NETSTANDARD
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LogEntry>().ToTable(LogEntriesTableName);
+            modelBuilder.Entity<LogEntry>().ToTable(LogEntriesTableName, LogEntriesSchemaName);
             base.OnModelCreating(modelBuilder);
         }
 #else
