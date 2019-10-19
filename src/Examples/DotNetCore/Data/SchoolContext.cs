@@ -1,4 +1,5 @@
 ﻿using ContosoUniversity.Models;
+using HodStudio.EfDiffLog.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Data
@@ -33,6 +34,8 @@ namespace ContosoUniversity.Data
 
             modelBuilder.Entity<CourseAssignment>()
                 .HasKey(c => new { c.CourseID, c.InstructorID });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
