@@ -119,6 +119,13 @@ public override int SaveChanges()
 }
 ```
 
+## Examples
+The source code contains two examples: one for .Net 4.5 and another for .Net Core 2.2. Both of them are the official tutorials projects from Microsoft. For more information about them, please, take a look on the links bellow:
+- .Net 4.5: https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application
+- .Net Core 2.2: https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-2.2
+
+We decided to make it available to version .Net Core 2.2, the newest version (3.0) is not used so much yet.
+
 ## Documentation
 For more situations and examples, please, take a look on our Documentation on the [Wiki](https://github.com/HodStudio/EfDiffLog/wiki).
 
