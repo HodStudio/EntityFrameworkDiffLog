@@ -42,15 +42,19 @@ namespace HodStudio.EfDiffLog.Repository
             }
         }
 
-        public static async Task LogChanges(this LoggingDbContext context, string userId)
+        public static void LogChanges(this LoggingDbContext context, string userId)
+            => LogChangesAsync(context, userId, false).GetAwaiter().GetResult();
+
+        public static async Task LogChangesAsync(this LoggingDbContext context, string userId)
+            => await LogChangesAsync(context, userId, true);
+
+        private static async Task LogChangesAsync(this LoggingDbContext context, string userId, bool asyncOperation)
         {
             var logTime = DateTime.Now;
-
             var changes = context.ChangeTracker.Entries()
-                .Where(x => entityStates.Contains(x.State)
-                    && IdColumnNames.ContainsKey(x.Entity.GetType().Name))
-                .ToList();
-
+                            .Where(x => entityStates.Contains(x.State)
+                                && IdColumnNames.ContainsKey(x.Entity.GetType().Name))
+                            .ToList();
             var jdp = new JsonDiffPatch();
 
             foreach (var item in changes)
@@ -63,7 +67,7 @@ namespace HodStudio.EfDiffLog.Repository
 
                 if (item.State == EntityState.Modified)
                 {
-                    var dbValues = await item.GetDatabaseValuesAsync();
+                    var dbValues = asyncOperation ? await item.GetDatabaseValuesAsync() : item.GetDatabaseValues();
                     original = GetValues(dbValues);
                 }
 

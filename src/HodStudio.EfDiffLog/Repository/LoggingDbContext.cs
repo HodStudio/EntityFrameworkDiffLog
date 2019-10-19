@@ -32,10 +32,25 @@ namespace HodStudio.EfDiffLog.Repository
         }
 #endif
 
+        public override int SaveChanges()
+        {
+            this.LogChanges(UserId);
+            return base.SaveChanges();
+        }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.LogChanges(UserId);
+            await this.LogChangesAsync(UserId);
             return await base.SaveChangesAsync(cancellationToken);
         }
+
+#if NETFULL
+        public override Task<int> SaveChangesAsync()
+        {
+            this.LogChanges(UserId);
+            return base.SaveChangesAsync();
+        }
+#endif
+
     }
 }
