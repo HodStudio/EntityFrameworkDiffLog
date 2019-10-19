@@ -6,12 +6,50 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 #else
 using System.Data.Entity;
+using System.Data.Common;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 #endif
 
 namespace HodStudio.EfDiffLog.Repository
 {
     public class LoggingDbContext : DbContext
     {
+
+#if NETSTANDARD
+        public LoggingDbContext(DbContextOptions options) : base(options) { }
+
+        protected LoggingDbContext() { }
+#else
+        protected LoggingDbContext()
+        {
+        }
+
+        protected LoggingDbContext(DbCompiledModel model) : base(model)
+        {
+        }
+
+        public LoggingDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+        }
+
+        public LoggingDbContext(string nameOrConnectionString, DbCompiledModel model) : base(nameOrConnectionString, model)
+        {
+        }
+
+        public LoggingDbContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
+        {
+        }
+
+        public LoggingDbContext(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection) : base(existingConnection, model, contextOwnsConnection)
+        {
+        }
+
+        public LoggingDbContext(ObjectContext objectContext, bool dbContextOwnsObjectContext) : base(objectContext, dbContextOwnsObjectContext)
+        {
+        }
+#endif
+
         protected string LogEntriesTableName { get; set; } = "LogEntries";
         protected string LogEntriesSchemaName { get; set; } = "dbo";
         public DbSet<LogEntry> LogEntries { get; set; }
