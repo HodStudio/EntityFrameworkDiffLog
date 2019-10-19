@@ -106,6 +106,19 @@ Add-Migration AddLogEntries
 Update-Database
 ```
 
+### Configure the user that is executing the operation
+In case your application have authenticated users, it makes sense that you would like to know which user made some operation. Based on that, the EfDiffLog is prepared to log this information too. You just need to configure the property `UserId` from the LoggingDbContext. For example, you can do that on the `SaveChanges` from your DbContext. This is just an example. Please, take the user based on the logic from you application.
+```cs
+public override int SaveChanges()
+{
+    // your code here
+
+    UserId = System.Threading.Thread.CurrentPrincipal.Identity.Name;
+
+    return base.SaveChanges();
+}
+```
+
 ## Documentation
 For more situations and examples, please, take a look on our Documentation on the [Wiki](https://github.com/HodStudio/EfDiffLog/wiki).
 

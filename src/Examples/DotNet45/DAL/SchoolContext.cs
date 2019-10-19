@@ -40,6 +40,8 @@ namespace ContosoUniversity.DAL
         {
             // your code here
 
+            UserId = System.Threading.Thread.CurrentPrincipal.Identity.Name;
+
             return base.SaveChanges();
         }
     }
