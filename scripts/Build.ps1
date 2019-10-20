@@ -34,14 +34,16 @@ $regexPrefix = "<VersionPrefix>(.+)<\/VersionPrefix>"
 $projSuffix = $csprojContent | Select-String -Pattern $regexSuffix | % { "$($_.matches.groups[1])" }
 $projPrefix = $csprojContent | Select-String -Pattern $regexPrefix | % { "$($_.matches.groups[1])" }
 $revision = $NULL
+$completeVersionSuffix = $NULL
 
 if ($projSuffix -ne $NULL)
 {
 	echo "Project sufix: $($projSuffix)"
 	$revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
 	$revision = "$projSuffix-{0:D2}" -f [convert]::ToInt32($revision, 10)
+	$completeVersionSuffix = "-$($revision)"
 }
-$completeVersion = "$($projPrefix)-$($revision)"
+$completeVersion = "$($projPrefix)$($completeVersionSuffix)"
 echo "Complete project version: $($completeVersion)"
 
 # Restore packages
