@@ -33,7 +33,7 @@ namespace HodStudio.EfDiffLog.Repository
             return result;
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = null)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             await this.LogChangesAsync(UserId);
             var result = await base.SaveChangesAsync(cancellationToken);
