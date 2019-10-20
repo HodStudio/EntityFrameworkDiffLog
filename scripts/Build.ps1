@@ -23,16 +23,16 @@ function Exec
 }
 
 $projectPath = ".\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj"
+$solutionPath = ".\HodStudio.EfDiffLog.LibraryOnly.sln"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 
-exec { & dotnet restore }
-
-exec { & dotnet build $projectPath -c Release }
-
+# Version Configuration
 $csprojContent = Get-Content $projectPath
 $regexSuffix = "<VersionSuffix>(.+)<\/VersionSuffix>"
+$regexPrefix = "<VersionPrefix>(.+)<\/VersionPrefix>"
 $projSuffix = $csprojContent | Select-String -Pattern $regexSuffix | % { "$($_.matches.groups[1])" }
+$projPrefix = $csprojContent | Select-String -Pattern $regexPrefix | % { "$($_.matches.groups[1])" }
 $revision = $NULL
 
 if ($projSuffix -ne $NULL)
@@ -41,7 +41,26 @@ if ($projSuffix -ne $NULL)
 	$revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
 	$revision = "$projSuffix-{0:D2}" -f [convert]::ToInt32($revision, 10)
 }
+$completeVersion = "$($projPrefix)-$($revision)"
+
+# Restore packages
+exec { & dotnet restore $solutionPath }
+
+# Sonar Analysis
+$needInstallSonar = dotnet tool list -g | Select-String -Pattern "dotnet-sonarscanner" | % { $_.Matches.Value -eq $NULL }
+if ($needInstallSonar -eq $true)
+{
+    echo "Installing sonarscanner"
+    exec { & dotnet tool install -g dotnet-sonarscanner }
+}
+else { echo "sonarscanner already installed" }
+exec { & dotnet sonarscanner begin /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac" /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+
+exec { & dotnet build $solutionPath -c Release }
+
+#exec { & dotnet sonarscanner end /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac" }
+dotnet sonarscanner end /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac"
 
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
-exec { & dotnet pack .\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj -c Release -o .\..\..\artifacts --version-suffix=$revision }
+exec { & dotnet pack $projectPath -c Release -o .\artifacts --version-suffix=$revision }
