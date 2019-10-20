@@ -31,7 +31,7 @@ exec { & dotnet restore }
 exec { & dotnet build $projectPath -c Release }
 
 $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
-$revision = "beta-{0:D2}" -f [convert]::ToInt32($revision, 10)
+$revision = "{0:D2}" -f [convert]::ToInt32($revision, 10)
 
 if($env:APPVEYOR_REPO_TAG -eq $true) { $revision = $NULL }
 
