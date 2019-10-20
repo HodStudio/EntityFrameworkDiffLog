@@ -29,7 +29,7 @@ namespace HodStudio.EfDiffLog.Repository
             foreach (var assembly in assemblies)
             {
                 if (assembly == null)
-                    throw new NullReferenceException(nameof(assembly));
+                    throw new ArgumentException(nameof(assembly));
 
                 foreach (Type type in assembly.GetTypes())
                 {
