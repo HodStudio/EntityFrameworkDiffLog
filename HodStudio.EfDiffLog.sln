@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{11C0CC5F-2B9D-4E34-8757-0CA3C96CAFA1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DebugProjects", "DebugProjects", "{11C0CC5F-2B9D-4E34-8757-0CA3C96CAFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity_DotNet45", "src\Examples\DotNet45\ContosoUniversity_DotNet45.csproj", "{264E21D6-4024-4A53-B1BE-1CD42F3348FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity_DotNet45", "src\DebugProjects\DotNet45\ContosoUniversity_DotNet45.csproj", "{264E21D6-4024-4A53-B1BE-1CD42F3348FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoUniversity_DotNetCore", "src\Examples\DotNetCore\ContosoUniversity_DotNetCore.csproj", "{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoUniversity_DotNetCore", "src\DebugProjects\DotNetCore\ContosoUniversity_DotNetCore.csproj", "{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{928F34CF-F77E-45E8-9569-A250326A469C}"
 	ProjectSection(SolutionItems) = preProject
