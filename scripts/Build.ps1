@@ -47,19 +47,30 @@ $completeVersion = "$($projPrefix)-$($revision)"
 exec { & dotnet restore $solutionPath }
 
 # Sonar Analysis
-$needInstallSonar = dotnet tool list -g | Select-String -Pattern "dotnet-sonarscanner" | % { $_.Matches.Value -eq $NULL }
-if ($needInstallSonar -eq $true)
+Try
 {
     echo "Installing sonarscanner"
     exec { & dotnet tool install -g dotnet-sonarscanner }
 }
-else { echo "sonarscanner already installed" }
+Catch
+{
+    $needInstallSonar = dotnet tool list -g | Select-String -Pattern "dotnet-sonarscanner" | % { $_.Matches.Value -eq $NULL }
+    if ($needInstallSonar -eq $true)
+    {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName
+        echo $FailedItem
+        echo $ErrorMessage
+        return -1
+    }
+    else { echo "sonarscanner already installed" }
+}
+
 exec { & dotnet sonarscanner begin /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac" /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
 
 exec { & dotnet build $solutionPath -c Release }
 
-#exec { & dotnet sonarscanner end /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac" }
-dotnet sonarscanner end /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac"
+exec { & dotnet sonarscanner end /d:sonar.login="7b4a861b0ba4126efd0ecdee223859ca92b7e6ac" }
 
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
