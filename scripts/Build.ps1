@@ -33,6 +33,8 @@ exec { & dotnet build $projectPath -c Release }
 $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
 $revision = "beta-{0:D2}" -f [convert]::ToInt32($revision, 10)
 
+if($env:APPVEYOR_REPO_TAG -eq $true) { $revision = $NULL }
+
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
 exec { & dotnet pack .\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj -c Release -o .\..\..\artifacts --version-suffix=$revision }
