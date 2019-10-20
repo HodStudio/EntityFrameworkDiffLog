@@ -29,7 +29,7 @@ namespace HodStudio.EfDiffLog.Repository
             foreach (var assembly in assemblies)
             {
                 if (assembly == null)
-                    throw new ArgumentNullException(nameof(assembly));
+                    throw new NullReferenceException(nameof(assembly));
 
                 foreach (Type type in assembly.GetTypes())
                 {
@@ -119,7 +119,7 @@ namespace HodStudio.EfDiffLog.Repository
 
             string jsonDiff = jdp.Diff(original, updated);
 
-            if (string.IsNullOrWhiteSpace(jsonDiff) == false)
+            if (!string.IsNullOrWhiteSpace(jsonDiff))
             {
                 var EntityDiff = JToken.Parse(jsonDiff).ToString(Formatting.None);
 
