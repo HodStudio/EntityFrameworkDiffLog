@@ -11,14 +11,14 @@
     <Authors>Cussa</Authors>
     <Company>HodStudio</Company>
     <Description>An easy way to create entity changes' log.</Description>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/HodStudio/EfDiffLog/</PackageProjectUrl>
     <PackageIconUrl>https://github.com/HodStudio/EfDiffLog/raw/master/EfDiffLogIcon.png?raw=true</PackageIconUrl>
     <RepositoryUrl>https://github.com/HodStudio/EfDiffLog/</RepositoryUrl>
     <PackageTags>EntityFramework;EF;Database;Logging;DifferencialLog;O/RM;ADO.NET;HodStudio</PackageTags>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageLicenseExpression>https://github.com/HodStudio/EfDiffLog/blob/master/LICENSE</PackageLicenseExpression>
-    <Copyright>Copyright (C) HodStudio</Copyright>
+    <Copyright>Copyright © 2019 HodStudio</Copyright>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
@@ -38,6 +38,13 @@
 
   <ItemGroup>
     <PackageReference Include="JsonDiffPatch.Net" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
