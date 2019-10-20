@@ -4,6 +4,9 @@ pull_requests:
 branches:
   only:
   - master
+environment:
+   sonartoken:
+     secure: zx9FQl2yXcPb8X7A4BqN753h1TFSuHioq13TFRwQk04/1cSxEFaqR1j+UAuJhyT7
 nuget:
   disable_publish_on_pr: true
 build_script:

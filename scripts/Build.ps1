@@ -66,11 +66,11 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
-exec { & dotnet sonarscanner begin /d:sonar.login="p9lyj//4V91/sdmzy+BSij30VHxz3jj2NvOKe4j28rh9LLkXiOt/e2zMX86Vjveq" /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
 
 exec { & dotnet build $solutionPath -c Release }
 
-exec { & dotnet sonarscanner end /d:sonar.login="p9lyj//4V91/sdmzy+BSij30VHxz3jj2NvOKe4j28rh9LLkXiOt/e2zMX86Vjveq" }
+exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
