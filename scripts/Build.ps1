@@ -44,12 +44,13 @@ if ($projSuffix -ne $NULL)
 $completeVersion = "$($projPrefix)-$($revision)"
 
 # Restore packages
+echo "Restoring packages"
 exec { & dotnet restore $solutionPath }
 
 # Sonar Analysis
+echo "Installing sonarscanner"
 Try
 {
-    echo "Installing sonarscanner"
     exec { & dotnet tool install -g dotnet-sonarscanner }
 }
 Catch
@@ -66,14 +67,14 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
-echo "$env:sonartoken"
-
-exec { & dotnet sonarscanner begin /d:sonar.login=%sonartoken% /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+echo "Starting Sonar"
+exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
 
 exec { & dotnet build $solutionPath -c Release }
 
-exec { & dotnet sonarscanner end /d:sonar.login=%sonartoken% }
+exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
+echo "Packing the library"
 exec { & dotnet pack $projectPath -c Release -o .\artifacts --version-suffix=$revision }
