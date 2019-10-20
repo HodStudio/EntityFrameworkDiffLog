@@ -7,7 +7,7 @@
   <PropertyGroup>
     <PackageId>HodStudio.EfDiffLog</PackageId>
     <VersionPrefix>1.0.1</VersionPrefix>
-    <VersionSuffix>beta</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Cussa</Authors>
     <Company>HodStudio</Company>
@@ -21,7 +21,7 @@
     <PackageTags>EntityFramework;EF;Database;Logging;DifferencialLog;O/RM;ADO.NET;HodStudio</PackageTags>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>Copyright © 2019 HodStudio</Copyright>
-    <PackageReleaseNotes>v1.0.1-beta
+    <PackageReleaseNotes>v1.0.1
 - Adjust overloads
 
 v1.0.0
