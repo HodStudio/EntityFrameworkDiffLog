@@ -77,7 +77,7 @@ namespace HodStudio.EfDiffLog.Repository
             => LogChangesAddedEntitiesAsync(context, userId, false).GetAwaiter().GetResult();
 
         internal static async Task LogChangesAddedEntitiesAsync(this LoggingDbContext context, string userId)
-            => await LogChangesAsync(context, userId, true);
+            => await LogChangesAddedEntitiesAsync(context, userId, true);
 
         private static async Task LogChangesAddedEntitiesAsync(this LoggingDbContext context, string userId, bool asyncOperation)
         {
