@@ -12,12 +12,13 @@
     <Company>HodStudio</Company>
     <Description>An easy way to create entity changes' log.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://github.com/HodStudio/EfDiffLog/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/HodStudio/EfDiffLog/</PackageProjectUrl>
     <PackageIconUrl>https://github.com/HodStudio/EfDiffLog/raw/master/EfDiffLogIcon.png?raw=true</PackageIconUrl>
     <RepositoryUrl>https://github.com/HodStudio/EfDiffLog/</RepositoryUrl>
     <PackageTags>EntityFramework;EF;Database;Logging;DifferencialLog;O/RM;ADO.NET;HodStudio</PackageTags>
     <RepositoryType>GitHub</RepositoryType>
+    <PackageLicenseExpression>https://github.com/HodStudio/EfDiffLog/blob/master/LICENSE</PackageLicenseExpression>
+    <Copyright>Copyright (C) HodStudio</Copyright>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
