@@ -1,5 +1,6 @@
 ﻿#if NETFULL
 using HodStudio.EfDiffLog.Model;
+using System;
 using System.Data.Entity;
 using System.Data.Common;
 using System.Data.Entity.Core.Objects;
@@ -48,14 +49,11 @@ namespace HodStudio.EfDiffLog.Repository
 
         public override Task<int> SaveChangesAsync()
         {
-            this.LogChanges(UserId);
-            var result = base.SaveChangesAsync();
             if (IdGeneratedByDatabase)
-            {
-                this.LogChangesAddedEntitiesAsync(UserId);
-                result = base.SaveChangesAsync();
-            }
-            return result;
+                throw new InvalidOperationException("You can't use the SaveChangesAsync without the await parameter if you have the \"IdGeneratedByDatabase\" configured to true. Use the overload that uses the await call.");
+
+            this.LogChanges(UserId);
+            return base.SaveChangesAsync();
         }
     }
 }

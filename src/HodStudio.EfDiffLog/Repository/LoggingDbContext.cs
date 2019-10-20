@@ -1,7 +1,6 @@
 ﻿using HodStudio.EfDiffLog.Model;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 #if NETSTANDARD
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +33,7 @@ namespace HodStudio.EfDiffLog.Repository
             return result;
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await this.LogChangesAsync(UserId);
             var result = await base.SaveChangesAsync(cancellationToken);
