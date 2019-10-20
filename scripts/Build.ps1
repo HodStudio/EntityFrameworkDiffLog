@@ -35,4 +35,4 @@ $revision = "beta-{0:D2}" -f [convert]::ToInt32($revision, 10)
 
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
-exec { & dotnet pack .\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj -c Release -o .\artifacts --version-suffix=$revision }
+exec { & dotnet pack .\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj -c Release -o .\..\..\artifacts --version-suffix=$revision }
