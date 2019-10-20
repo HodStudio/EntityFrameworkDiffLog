@@ -66,7 +66,7 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
-echo "%sonartoken%"
+echo "$env:sonartoken"
 
 exec { & dotnet sonarscanner begin /d:sonar.login=%sonartoken% /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
 
