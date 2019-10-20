@@ -22,7 +22,7 @@ namespace ContosoUniversity
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbInterception.Add(new SchoolInterceptorTransientErrors());
             DbInterception.Add(new SchoolInterceptorLogging());
-            LoggingContext.InitializeIdColumnNames(Assembly.GetExecutingAssembly());
+            LoggingContext.InitializeIdColumnNames(typeof(MvcApplication).Assembly);
         }
     }
 }

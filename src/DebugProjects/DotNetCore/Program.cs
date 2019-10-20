@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using ContosoUniversity.Data;
 using HodStudio.EfDiffLog.Repository;
-using System.Reflection;
 
 namespace ContosoUniversity
 {
@@ -25,7 +24,7 @@ namespace ContosoUniversity
                 var services = scope.ServiceProvider;
                 try
                 {
-                    LoggingContext.InitializeIdColumnNames(Assembly.GetExecutingAssembly());
+                    LoggingContext.InitializeIdColumnNames(typeof(Program).Assembly);
                     var context = services.GetRequiredService<SchoolContext>();
                     DbInitializer.Initialize(context);
                 }
