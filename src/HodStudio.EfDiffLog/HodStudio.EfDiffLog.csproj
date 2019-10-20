@@ -7,7 +7,7 @@
   <PropertyGroup>
     <PackageId>HodStudio.EfDiffLog</PackageId>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>beta</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Cussa</Authors>
     <Company>HodStudio</Company>
