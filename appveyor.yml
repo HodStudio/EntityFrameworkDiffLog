@@ -6,7 +6,7 @@ branches:
   - master
 environment:
    sonartoken:
-     secure: zx9FQl2yXcPb8X7A4BqN753h1TFSuHioq13TFRwQk04/1cSxEFaqR1j+UAuJhyT7
+     secure: lgu+eTO3pKUZUsXodGVMlrzDYuLahy1idUOoYNMf6epJyhWHL0+4MdTJnZUdsTMJ
 nuget:
   disable_publish_on_pr: true
 build_script:
