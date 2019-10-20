@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EfDiffLog", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6B90C5F8-F5C0-4CFE-A6DB-F1B2AD5F433A}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -17,6 +18,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity_DotNet45", "src\Examples\DotNet45\ContosoUniversity_DotNet45.csproj", "{264E21D6-4024-4A53-B1BE-1CD42F3348FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoUniversity_DotNetCore", "src\Examples\DotNetCore\ContosoUniversity_DotNetCore.csproj", "{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{928F34CF-F77E-45E8-9569-A250326A469C}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\Build.ps1 = scripts\Build.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
