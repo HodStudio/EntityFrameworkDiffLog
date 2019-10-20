@@ -14,7 +14,7 @@ namespace HodStudio.EfDiffLog.Repository
     {
         protected string LogEntriesTableName { get; set; } = "LogEntries";
         protected string LogEntriesSchemaName { get; set; } = "dbo";
-        
+
         public bool IdGeneratedByDatabase { get; set; } = true;
 
         public DbSet<LogEntry> LogEntries { get; set; }
@@ -33,7 +33,7 @@ namespace HodStudio.EfDiffLog.Repository
             return result;
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await this.LogChangesAsync(UserId);
             var result = await base.SaveChangesAsync(cancellationToken);
