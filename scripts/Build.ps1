@@ -42,6 +42,7 @@ if ($projSuffix -ne $NULL)
 	$revision = "$projSuffix-{0:D2}" -f [convert]::ToInt32($revision, 10)
 }
 $completeVersion = "$($projPrefix)-$($revision)"
+echo "Complete project version: $($completeVersion)"
 
 # Restore packages
 echo "Restoring packages"
