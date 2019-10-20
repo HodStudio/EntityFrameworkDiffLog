@@ -78,4 +78,4 @@ exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 # exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
 echo "Packing the library"
-exec { & dotnet pack $projectPath -c Release -o .\artifacts --version-suffix=$revision }
+exec { & dotnet pack $projectPath -c Release -o .\..\..\artifacts --version-suffix=$revision }
