@@ -1,12 +1,12 @@
-﻿using HodStudio.EfDiffLog.Model;
-using HodStudio.EfDiffLog.TestsDotNetCore.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
+using HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.Model;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByApp
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
 {
     public class IdGeneratedByAppBaseTests : BaseTest
     {

@@ -1,9 +1,9 @@
-﻿using HodStudio.EfDiffLog.Repository;
-using HodStudio.EfDiffLog.TestsDotNetCore.Data;
+﻿using HodStudio.EntityFrameworkDiffLog.Repository;
+using HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.Data;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore
 {
     public class BaseTest
     {
@@ -21,7 +21,7 @@ namespace HodStudio.EfDiffLog.TestsDotNetCore
             if (!Initialized)
             {
                 var builder = new DbContextOptionsBuilder<AppDbContext>();
-                builder.UseInMemoryDatabase($"HsEfDiffLog");
+                builder.UseInMemoryDatabase($"HsEntityFrameworkDiffLog");
                 Options = builder.Options;
 
                 LoggingContext.InitializeIdColumnNames(typeof(AppDbContext).Assembly);

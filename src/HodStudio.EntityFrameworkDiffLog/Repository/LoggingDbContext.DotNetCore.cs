@@ -1,5 +1,5 @@
 ﻿#if NETSTANDARD
-using HodStudio.EfDiffLog.Model;
+using HodStudio.EntityFrameworkDiffLog.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HodStudio.EfDiffLog.Repository
+namespace HodStudio.EntityFrameworkDiffLog.Repository
 {
     public partial class LoggingDbContext : DbContext
     {
@@ -24,16 +24,16 @@ namespace HodStudio.EfDiffLog.Repository
         }
 
         /// <summary>
-        /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EfDiffLog.
+        /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EntityFrameworkDiffLog.
         /// 
-        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// Please, pay attention that direct calls to this methods doesn't produce the EntityFrameworkDiffLogs.
         /// </summary>
         /// <remarks> 
         /// This method will automatically call Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges
         /// to discover any changes to entity instances before saving to the underlying database.
         /// This can be disabled via Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled.
         /// 
-        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// Please, pay attention that direct calls to this methods doesn't produce the EntityFrameworkDiffLogs.
         /// Use the overload that has no parameters \"SaveChangesAsync()\" or with the CancellationToken.
         /// </remarks>
         /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>
@@ -45,9 +45,9 @@ namespace HodStudio.EfDiffLog.Repository
         }
 
         /// <summary>
-        /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EfDiffLog.
+        /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EntityFrameworkDiffLog.
         /// 
-        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// Please, pay attention that direct calls to this methods doesn't produce the EntityFrameworkDiffLogs.
         /// </summary>
         /// <remarks> 
         /// This method will automatically call Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges
@@ -57,7 +57,7 @@ namespace HodStudio.EfDiffLog.Repository
         /// 'await' to ensure that any asynchronous operations have completed before calling
         /// another method on this context.
         /// 
-        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// Please, pay attention that direct calls to this methods doesn't produce the EntityFrameworkDiffLogs.
         /// Use the overload that has no parameters \"SaveChangesAsync()\" or with the CancellationToken.
         /// </remarks>
         /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>

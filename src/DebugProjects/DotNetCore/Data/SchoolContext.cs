@@ -1,5 +1,5 @@
 ﻿using ContosoUniversity.Models;
-using HodStudio.EfDiffLog.Repository;
+using HodStudio.EntityFrameworkDiffLog.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Data

@@ -1,9 +1,9 @@
-﻿using HodStudio.EfDiffLog.TestsDotNetCore.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.Model;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByDatabase
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByDatabase
 {
     public class UpdateOperationsTests : IdGeneratedByDatabaseBaseTests
     {

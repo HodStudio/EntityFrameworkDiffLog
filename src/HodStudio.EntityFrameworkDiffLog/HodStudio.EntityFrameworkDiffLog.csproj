@@ -15,8 +15,8 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/HodStudio/EntityFrameworkDiffLog/</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/HodStudio/EntityFrameworkDiffLog/raw/master/EfDiffLogIcon.png?raw=true</PackageIconUrl>
-    <PackageIcon>EfDiffLogIcon.png</PackageIcon>
+    <PackageIconUrl>https://github.com/HodStudio/EntityFrameworkDiffLog/raw/master/EntityFrameworkDiffLogIcon.png?raw=true</PackageIconUrl>
+    <PackageIcon>EntityFrameworkDiffLogIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/HodStudio/EntityFrameworkDiffLog/</RepositoryUrl>
     <PackageTags>EntityFramework;EF;Database;Logging;DifferencialLog;O/RM;ADO.NET;HodStudio</PackageTags>
     <RepositoryType>GitHub</RepositoryType>
@@ -47,7 +47,7 @@
 
   <ItemGroup>
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" />
-    <None Include="..\..\EfDiffLogIcon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\EntityFrameworkDiffLogIcon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

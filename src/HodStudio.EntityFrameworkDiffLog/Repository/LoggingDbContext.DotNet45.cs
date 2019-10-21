@@ -1,5 +1,5 @@
 ﻿#if NETFULL
-using HodStudio.EfDiffLog.Model;
+using HodStudio.EntityFrameworkDiffLog.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -8,7 +8,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 
-namespace HodStudio.EfDiffLog.Repository
+namespace HodStudio.EntityFrameworkDiffLog.Repository
 {
     public partial class LoggingDbContext : DbContext
     {

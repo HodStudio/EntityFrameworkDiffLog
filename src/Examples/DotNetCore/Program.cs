@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using ContosoUniversity.Data;
-using HodStudio.EfDiffLog.Repository;
+using HodStudio.EntityFrameworkDiffLog.Repository;
 
 namespace ContosoUniversity
 {

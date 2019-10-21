@@ -1,7 +1,7 @@
-﻿using HodStudio.EfDiffLog.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
 using System;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore.Model
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.Model
 {
     [LoggedEntity]
     public class Department

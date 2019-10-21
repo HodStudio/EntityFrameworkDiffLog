@@ -22,7 +22,7 @@ function Exec
     }
 }
 
-$projectPath = ".\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj"
+$projectPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 
@@ -70,7 +70,7 @@ Catch
 }
 
 echo "Starting Sonar"
-exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
 
 exec { & dotnet build -c Release }
 

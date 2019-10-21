@@ -14,7 +14,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj" />
+    <ProjectReference Include="..\..\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj" />
   </ItemGroup>
 
 </Project>

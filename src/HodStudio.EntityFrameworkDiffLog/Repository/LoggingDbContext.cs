@@ -1,4 +1,4 @@
-﻿using HodStudio.EfDiffLog.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Entity;
 #endif
 
-namespace HodStudio.EfDiffLog.Repository
+namespace HodStudio.EntityFrameworkDiffLog.Repository
 {
     public partial class LoggingDbContext
     {

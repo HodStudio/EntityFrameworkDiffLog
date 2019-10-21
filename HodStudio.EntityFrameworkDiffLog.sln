@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{3FF000AD-B6E8-47EC-80BF-83606A879061}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EfDiffLog", "src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj", "{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EntityFrameworkDiffLog", "src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj", "{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6B90C5F8-F5C0-4CFE-A6DB-F1B2AD5F433A}"
 	ProjectSection(SolutionItems) = preProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoUniversity_Example_D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{38726895-802C-4A8D-95E1-C0755AA611F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EfDiffLog.TestsDotNetCore", "src\HodStudio.EfDiffLog.TestsDotNetCore\HodStudio.EfDiffLog.TestsDotNetCore.csproj", "{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EntityFrameworkDiffLog.TestsDotNetCore", "src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.csproj", "{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

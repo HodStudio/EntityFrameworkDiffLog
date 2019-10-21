@@ -1,4 +1,4 @@
-﻿using HodStudio.EfDiffLog.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
 using JsonDiffPatchDotNet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,7 +16,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 #endif
 
-namespace HodStudio.EfDiffLog.Repository
+namespace HodStudio.EntityFrameworkDiffLog.Repository
 {
     public static class LoggingContext
     {

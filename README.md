@@ -1,28 +1,28 @@
-![EfDiffLog logo](https://github.com/HodStudio/EfDiffLog/blob/master/EfDiffLogIcon.png)
+![EntityFrameworkDiffLog logo](https://github.com/HodStudio/EntityFrameworkDiffLog/blob/master/EntityFrameworkDiffLogIcon.png)
 
-# EfDiffLog by HodStudio
+# EntityFrameworkDiffLog by HodStudio
 
 _An easy way to create entity changes' log using Entity Framework_
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5b7jc1mjukl0v6vs?svg=true)](https://ci.appveyor.com/project/Cussa/efdifflog)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=bugs)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![CodeSmells](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=code_smells)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=vulnerabilities)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=duplicated_lines_density)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![sqale_index](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=sqale_index)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=sqale_rating)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=reliability_rating)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) [![security_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EfDiffLog&metric=security_rating)](https://sonarqube.com/dashboard?id=HodStudio.EfDiffLog) 
+[![Build status](https://ci.appveyor.com/api/projects/status/5b7jc1mjukl0v6vs?svg=true)](https://ci.appveyor.com/project/Cussa/EntityFrameworkDiffLog)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=bugs)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![CodeSmells](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=code_smells)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=vulnerabilities)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=duplicated_lines_density)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![sqale_index](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_index)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=reliability_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![security_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=security_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) 
 
 During 2018, we worked on an open-source project, and one of the exciting things that we did there was to create an excellent way to have an entity changes' logs. The solution was exciting, but not so good if you wanted to reuse that. So, we decided to create a library to make it easier for anyone that wants to use it!
 
 ## Download it using NuGet
 ```
-Install-Package HodStudio.EfDiffLog
+Install-Package HodStudio.EntityFrameworkDiffLog
 ```
-Link: https://www.nuget.org/packages/HodStudio.EfDiffLog
+Link: https://www.nuget.org/packages/HodStudio.EntityFrameworkDiffLog
 
 ## How to use
 After installing the library via NuGet, you need to make some modifications.
 
 ### Include the `LoggedEntity` on your Entities
-To know which entities will generate the changelogs, the EfDiffLog will use the `LoggedEntity` attribute to execute it.
+To know which entities will generate the changelogs, the EntityFrameworkDiffLog will use the `LoggedEntity` attribute to execute it.
 If you use the attribute without providing the property name, it uses the default ("Id"). Pay attention that it's case sensitive.
 ```cs
-using HodStudio.EfDiffLog.Model;
+using HodStudio.EntityFrameworkDiffLog.Model;
 
 [LoggedEntity]
 public class User
@@ -34,7 +34,7 @@ public class User
 
 In case you have an entity which the Id property is not named "Id," you can use the overload.
 ```cs
-using HodStudio.EfDiffLog.Model;
+using HodStudio.EntityFrameworkDiffLog.Model;
 
 [LoggedEntity("UserId")]
 public class User
@@ -46,7 +46,7 @@ public class User
 
 To avoid problems, especially during renames, we recommend using the `nameof` to configure the property name.
 ```cs
-using HodStudio.EfDiffLog.Model;
+using HodStudio.EntityFrameworkDiffLog.Model;
 
 [LoggedEntity(nameof(UserId))]
 public class User
@@ -60,7 +60,7 @@ public class User
 To have a better performance, we create a dictionary with the entities that will be logged and keep it. To do that, initialize the dictionary during the start of the app using the following method:
 ```cs
 using System.Reflection;
-using HodStudio.EfDiffLog.Repository;
+using HodStudio.EntityFrameworkDiffLog.Repository;
 
 LoggingContext.InitializeIdColumnNames(Assembly.GetEntryAssembly());
 ```
@@ -68,7 +68,7 @@ LoggingContext.InitializeIdColumnNames(Assembly.GetEntryAssembly());
 In case your models are stored in another assembly (or assemblies), pass them to this parameter.
 
 ### Change your DbContext
-To be able to use the full power of EfDiffLog, the easiest way is to inherit your DbContext from LoggingDbContext.
+To be able to use the full power of EntityFrameworkDiffLog, the easiest way is to inherit your DbContext from LoggingDbContext.
 ```cs
 public class ApplicationDbContext : LoggingDbContext
 ```
@@ -108,7 +108,7 @@ Update-Database
 ```
 
 ### Configure the user that is executing the operation
-In case your application has authenticated users, it makes sense that you would like to know which user made some operation. Based on that, the EfDiffLog is prepared to log this information too. You need to configure the property `UserId` from the LoggingDbContext. For example, you can do that on the `SaveChanges` from your DbContext. This just an example. Please, take the user based on the logic from your application.
+In case your application has authenticated users, it makes sense that you would like to know which user made some operation. Based on that, the EntityFrameworkDiffLog is prepared to log this information too. You need to configure the property `UserId` from the LoggingDbContext. For example, you can do that on the `SaveChanges` from your DbContext. This just an example. Please, take the user based on the logic from your application.
 ```cs
 public override int SaveChanges()
 {
@@ -139,6 +139,6 @@ The source code contains two examples: one for .Net 4.5 and another for .Net Cor
 We decided to make it available to version .Net Core 2.2, the newest version (3.0) is not used so much yet.
 
 ## Documentation
-For more situations and examples, please, take a look at our Documentation on the [Wiki](https://github.com/HodStudio/EfDiffLog/wiki).
+For more situations and examples, please, take a look at our Documentation on the [Wiki](https://github.com/HodStudio/EntityFrameworkDiffLog/wiki).
 
-To see the planned new features, take a look at our [RoadMap](https://github.com/HodStudio/EfDiffLog/wiki#road-map-in-eternal-construction).
+To see the planned new features, take a look at our [RoadMap](https://github.com/HodStudio/EntityFrameworkDiffLog/wiki#road-map-in-eternal-construction).

@@ -1,4 +1,4 @@
-﻿using HodStudio.EfDiffLog.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

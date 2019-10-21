@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HodStudio.EfDiffLog.Model
+namespace HodStudio.EntityFrameworkDiffLog.Model
 {
     public class LogEntry
     {

@@ -1,9 +1,9 @@
-﻿using HodStudio.EfDiffLog.TestsDotNetCore.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.Model;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByApp
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
 {
     public class DeleteOperationsTests : IdGeneratedByAppBaseTests
     {

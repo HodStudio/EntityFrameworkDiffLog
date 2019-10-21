@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByApp
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
 {
     public class InsertOperationsTests : IdGeneratedByAppBaseTests
     {

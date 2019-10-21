@@ -1,6 +1,6 @@
-﻿using HodStudio.EfDiffLog.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
 
-namespace HodStudio.EfDiffLog.TestsDotNetCore.Model
+namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.Model
 {
     [LoggedEntity]
     public class User

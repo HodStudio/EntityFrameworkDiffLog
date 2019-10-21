@@ -8,7 +8,7 @@ using System.Web.Routing;
 using ContosoUniversity.DAL;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Reflection;
-using HodStudio.EfDiffLog.Repository;
+using HodStudio.EntityFrameworkDiffLog.Repository;
 
 namespace ContosoUniversity
 {

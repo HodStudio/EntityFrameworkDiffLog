@@ -137,7 +137,7 @@ namespace ContosoUniversity.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Person");
                 });
 
-            modelBuilder.Entity("HodStudio.EfDiffLog.Model.LogEntry", b =>
+            modelBuilder.Entity("HodStudio.EntityFrameworkDiffLog.Model.LogEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
