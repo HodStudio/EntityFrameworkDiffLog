@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HodStudio.EfDiffLog.Model
+namespace HodStudio.EntityFrameworkDiffLog.Model
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class LoggedEntityAttribute : Attribute
@@ -8,14 +8,14 @@ namespace HodStudio.EfDiffLog.Model
         public const string DefaultIdPropertyName = "Id";
 
         /// <summary>
-        /// Defines that the entity will be logged when using the EfDiffLog.
+        /// Defines that the entity will be logged when using the EntityFrameworkDiffLog.
         /// It will use the default id property name ("Id"), with case sensitive.
         /// If your class has a different id property name, use the overload, where you can provide the Id property name.
         /// </summary>
         public LoggedEntityAttribute() : this(DefaultIdPropertyName) { }
 
         /// <summary>
-        /// Defines that the entity will be logged when using the EfDiffLog.
+        /// Defines that the entity will be logged when using the EntityFrameworkDiffLog.
         /// Please, pay attention to the fact that the property name is case sensitive.
         /// Recommendation: use nameof(property) to avoid problems
         /// </summary>

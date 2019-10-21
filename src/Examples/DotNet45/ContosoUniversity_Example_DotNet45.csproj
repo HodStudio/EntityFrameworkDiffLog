@@ -54,9 +54,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="HodStudio.EfDiffLog, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\HodStudio.EfDiffLog.1.0.1-beta-31\lib\net45\HodStudio.EfDiffLog.dll</HintPath>
-    </Reference>
     <Reference Include="JsonDiffPatchDotNet, Version=2.1.0.0, Culture=neutral, PublicKeyToken=a407b9994a6d66d5, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\JsonDiffPatch.Net.2.1.0\lib\net45\JsonDiffPatchDotNet.dll</HintPath>
     </Reference>
@@ -275,6 +272,12 @@
       <DependentUpon>201910191632025_AddingLogEntries.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj">
+      <Project>{0381c3d1-0fff-4e20-aa37-aacc364c2ac4}</Project>
+      <Name>HodStudio.EntityFrameworkDiffLog</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -293,7 +296,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>12810</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:41787/</IISUrl>
+          <IISUrl>http://localhost:41788/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

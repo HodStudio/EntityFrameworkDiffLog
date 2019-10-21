@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{3FF000AD-B6E8-47EC-80BF-83606A879061}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EfDiffLog", "src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj", "{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EntityFrameworkDiffLog", "src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj", "{0381C3D1-0FFF-4E20-AA37-AACC364C2AC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6B90C5F8-F5C0-4CFE-A6DB-F1B2AD5F433A}"
 	ProjectSection(SolutionItems) = preProject
@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity_Example_D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoUniversity_Example_DotNetCore", "src\Examples\DotNetCore\ContosoUniversity_Example_DotNetCore.csproj", "{6B50016B-318B-413C-AA0F-27AD6CDBAC21}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{38726895-802C-4A8D-95E1-C0755AA611F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HodStudio.EntityFrameworkDiffLog.TestsDotNetCore", "src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.csproj", "{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,7 +48,6 @@ Global
 		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{264E21D6-4024-4A53-B1BE-1CD42F3348FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,11 +55,14 @@ Global
 		{7D814C43-15BC-4098-AF09-436BC6623781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D814C43-15BC-4098-AF09-436BC6623781}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D814C43-15BC-4098-AF09-436BC6623781}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D814C43-15BC-4098-AF09-436BC6623781}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B50016B-318B-413C-AA0F-27AD6CDBAC21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B50016B-318B-413C-AA0F-27AD6CDBAC21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B50016B-318B-413C-AA0F-27AD6CDBAC21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B50016B-318B-413C-AA0F-27AD6CDBAC21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{8EEE5811-E35D-4B3D-BDA1-2AFB5CEDFC6B} = {11C0CC5F-2B9D-4E34-8757-0CA3C96CAFA1}
 		{7D814C43-15BC-4098-AF09-436BC6623781} = {CC632624-6456-4EE6-AF19-CD1B4E206C3F}
 		{6B50016B-318B-413C-AA0F-27AD6CDBAC21} = {CC632624-6456-4EE6-AF19-CD1B4E206C3F}
+		{3F3FB1E8-E0C4-4CDB-B014-F8C1321CD5CF} = {38726895-802C-4A8D-95E1-C0755AA611F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86726FBC-4F6D-468F-85B8-99C7DA7DC1D7}

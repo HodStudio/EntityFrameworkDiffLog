@@ -267,9 +267,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj">
+    <ProjectReference Include="..\..\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj">
       <Project>{0381c3d1-0fff-4e20-aa37-aacc364c2ac4}</Project>
-      <Name>HodStudio.EfDiffLog</Name>
+      <Name>HodStudio.EntityFrameworkDiffLog</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

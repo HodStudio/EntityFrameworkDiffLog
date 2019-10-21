@@ -1,4 +1,4 @@
-﻿using HodStudio.EfDiffLog.Model;
+﻿using HodStudio.EntityFrameworkDiffLog.Model;
 using JsonDiffPatchDotNet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,7 +16,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 #endif
 
-namespace HodStudio.EfDiffLog.Repository
+namespace HodStudio.EntityFrameworkDiffLog.Repository
 {
     public static class LoggingContext
     {
@@ -107,9 +107,18 @@ namespace HodStudio.EfDiffLog.Repository
             var entityType = GetEntityType(item.Entity.GetType());
 
             var original = emptyJson;
+            var idValue = GetIdValue(item, IdColumnNames[entityType.Name]);
 
-            var updated = GetValues(item.CurrentValues);
-            var idColumnName = IdColumnNames[entityType.Name];
+            string updated;
+            if (state == EntityState.Deleted)
+            {
+                var dbValues = asyncOperation ? await item.GetDatabaseValuesAsync() : item.GetDatabaseValues();
+                updated = GetValues(dbValues);
+            }
+            else
+            {
+                updated = GetValues(item.CurrentValues);
+            }
 
             if (state == EntityState.Modified)
             {
@@ -126,7 +135,7 @@ namespace HodStudio.EfDiffLog.Repository
                 var logEntry = new LogEntry()
                 {
                     EntityName = entityType.Name,
-                    EntityId = item.CurrentValues[idColumnName].ToString(),
+                    EntityId = idValue,
                     LogDateTime = logTime,
                     Operation = state.ToString(),
                     UserId = userId,
@@ -147,6 +156,18 @@ namespace HodStudio.EfDiffLog.Repository
 
             return null;
         }
+
+        private static string GetIdValue(
+#if NETSTANDARD
+            EntityEntry entry,
+#else
+            DbEntityEntry entry,
+#endif
+            string idColumnName
+            )
+             => entry.State == EntityState.Deleted ?
+                entry.OriginalValues[idColumnName].ToString() :
+                entry.CurrentValues[idColumnName].ToString();
 
         private static string SerializeDictionary(Dictionary<string, object> pairs) => JsonConvert.SerializeObject(pairs);
 

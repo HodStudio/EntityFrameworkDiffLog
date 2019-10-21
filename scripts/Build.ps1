@@ -22,8 +22,8 @@ function Exec
     }
 }
 
-$projectPath = ".\src\HodStudio.EfDiffLog\HodStudio.EfDiffLog.csproj"
-$solutionPath = ".\HodStudio.EfDiffLog.LibraryOnly.sln"
+$projectPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj"
+$libraryOnlySolutionPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.Library.sln"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 
@@ -48,7 +48,7 @@ echo "Complete project version: $($completeVersion)"
 
 # Restore packages
 echo "Restoring packages"
-exec { & dotnet restore $solutionPath }
+exec { & dotnet restore }
 
 # Sonar Analysis
 echo "Installing sonarscanner"
@@ -70,14 +70,17 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
-echo "Starting Sonar"
-exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EfDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EfDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+echo "Build entire solution"
+exec { & dotnet build -c Release }
 
-exec { & dotnet build $solutionPath -c Release }
+exec { & dotnet test -c Release }
+
+echo "Starting Sonar for Library"
+exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+
+exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
-
-# exec { & dotnet test .\test\HodStudio.EfDiffLog.Tests -c Release }
 
 echo "Packing the library"
 exec { & dotnet pack $projectPath -c Release -o .\..\..\artifacts --version-suffix=$revision }
