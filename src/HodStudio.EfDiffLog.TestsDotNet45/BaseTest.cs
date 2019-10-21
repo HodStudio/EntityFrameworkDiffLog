@@ -1,5 +1,5 @@
 ﻿using HodStudio.EfDiffLog.Repository;
-using HodStudio.EfDiffLog.TestsDotNet45.Data;
+using HodStudio.EfDiffLog.TestsDotNetCore.Data;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 

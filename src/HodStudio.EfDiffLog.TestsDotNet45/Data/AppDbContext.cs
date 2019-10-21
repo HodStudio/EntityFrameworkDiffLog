@@ -1,8 +1,8 @@
 ﻿using HodStudio.EfDiffLog.Repository;
-using HodStudio.EfDiffLog.TestsDotNet45.Model;
+using HodStudio.EfDiffLog.TestsDotNetCore.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace HodStudio.EfDiffLog.TestsDotNet45.Data
+namespace HodStudio.EfDiffLog.TestsDotNetCore.Data
 {
     public class AppDbContext : LoggingDbContext
     {
