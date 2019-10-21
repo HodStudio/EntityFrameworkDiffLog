@@ -1,4 +1,4 @@
-﻿using HodStudio.EfDiffLog.TestsDotNet45.Model;
+﻿using HodStudio.EfDiffLog.TestsDotNetCore.Model;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;

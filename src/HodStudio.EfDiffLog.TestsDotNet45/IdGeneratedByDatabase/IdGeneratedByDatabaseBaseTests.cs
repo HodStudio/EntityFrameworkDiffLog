@@ -1,5 +1,5 @@
 ﻿using HodStudio.EfDiffLog.Model;
-using HodStudio.EfDiffLog.TestsDotNet45.Model;
+using HodStudio.EfDiffLog.TestsDotNetCore.Model;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -8,10 +8,8 @@ namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByDatabase
 {
     public class IdGeneratedByDatabaseBaseTests : BaseTest
     {
-        protected virtual string Operation { get; set; }
-
         [SetUp]
-        public void SetUp() => Context.IdGeneratedByDatabase = true;
+        public void SetUpDatabaseTests() => Context.IdGeneratedByDatabase = true;
 
         protected virtual User CreateUser()
         {
