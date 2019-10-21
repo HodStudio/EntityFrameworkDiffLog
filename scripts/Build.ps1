@@ -23,6 +23,7 @@ function Exec
 }
 
 $projectPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj"
+$libraryOnlySolutionPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.Library.sln"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 
@@ -77,7 +78,7 @@ exec { & dotnet test -c Release }
 echo "Starting Sonar for Library"
 exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
 
-exec { & dotnet build $projectPath -c Release }
+exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
