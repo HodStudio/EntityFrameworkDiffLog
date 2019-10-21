@@ -9,6 +9,8 @@ namespace HodStudio.EfDiffLog.TestsDotNetCore
     {
         public static bool Initialized = false;
 
+        protected virtual string Operation { get; set; }
+
         protected AppDbContext Context { get; private set; }
 
         protected static DbContextOptions<AppDbContext> Options { get; set; }
