@@ -39,7 +39,6 @@ namespace HodStudio.EfDiffLog.Repository
         /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>
         /// <returns>The number of state entries written to the database.</returns>
         /// <exception cref="DbUpdateException">An error is encountered while saving to the database.</exception>
-        /// <exception cref="InvalidOperationException">You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".</exception>
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             return base.SaveChanges(acceptAllChangesOnSuccess);
@@ -64,7 +63,6 @@ namespace HodStudio.EfDiffLog.Repository
         /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>
         /// <returns>The number of state entries written to the database.</returns>
         /// <exception cref="DbUpdateException">An error is encountered while saving to the database.</exception>
-        /// <exception cref="InvalidOperationException">You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".</exception>
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
