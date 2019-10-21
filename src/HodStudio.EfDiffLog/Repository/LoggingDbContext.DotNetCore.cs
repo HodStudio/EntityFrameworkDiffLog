@@ -26,15 +26,15 @@ namespace HodStudio.EfDiffLog.Repository
         /// <summary>
         /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EfDiffLog.
         /// 
-        /// Please, pay attention that if you are using the EfDiffLog.IdGeneratedByDatabase configured to true, this method should not be used.
+        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
         /// </summary>
         /// <remarks> 
         /// This method will automatically call Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges
         /// to discover any changes to entity instances before saving to the underlying database.
         /// This can be disabled via Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled.
         /// 
-        /// Please, pay attention that if you are using the EfDiffLog.IdGeneratedByDatabase configured to true, this method should not be used.
-        /// To continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".
+        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// Use the overload that has no parameters \"SaveChangesAsync()\" or with the CancellationToken.
         /// </remarks>
         /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>
         /// <returns>The number of state entries written to the database.</returns>
@@ -42,19 +42,31 @@ namespace HodStudio.EfDiffLog.Repository
         /// <exception cref="InvalidOperationException">You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".</exception>
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            if (IdGeneratedByDatabase)
-                throw new InvalidOperationException("You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".");
-
-            this.LogChanges(UserId);
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
+        /// <summary>
+        /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EfDiffLog.
+        /// 
+        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// </summary>
+        /// <remarks> 
+        /// This method will automatically call Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges
+        /// to discover any changes to entity instances before saving to the underlying database.
+        /// This can be disabled via Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled.
+        /// Multiple active operations on the same context instance are not supported. Use
+        /// 'await' to ensure that any asynchronous operations have completed before calling
+        /// another method on this context.
+        /// 
+        /// Please, pay attention that direct calls to this methods doesn't produce the EfDiffLogs.
+        /// Use the overload that has no parameters \"SaveChangesAsync()\" or with the CancellationToken.
+        /// </remarks>
+        /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>
+        /// <returns>The number of state entries written to the database.</returns>
+        /// <exception cref="DbUpdateException">An error is encountered while saving to the database.</exception>
+        /// <exception cref="InvalidOperationException">You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".</exception>
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            if (IdGeneratedByDatabase)
-                throw new InvalidOperationException("You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChangesAsync()\".");
-
-            await this.LogChangesAsync(UserId);
             return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }

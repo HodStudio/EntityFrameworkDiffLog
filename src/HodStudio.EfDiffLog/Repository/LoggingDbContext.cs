@@ -1,6 +1,7 @@
 ﻿using HodStudio.EfDiffLog.Model;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 #if NETSTANDARD
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +22,28 @@ namespace HodStudio.EfDiffLog.Repository
 
         public string UserId { get; set; }
 
-        
+        public override int SaveChanges()
+        {
+            this.LogChanges(UserId);
+            var result = base.SaveChanges();
+            if (IdGeneratedByDatabase)
+            {
+                this.LogChangesAddedEntities(UserId);
+                result = base.SaveChanges();
+            }
+            return result;
+        }
 
-        
-
-        
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            await this.LogChangesAsync(UserId);
+            var result = await base.SaveChangesAsync(cancellationToken);
+            if (IdGeneratedByDatabase)
+            {
+                await this.LogChangesAddedEntitiesAsync(UserId);
+                result = await base.SaveChangesAsync(cancellationToken);
+            }
+            return result;
+        }
     }
 }

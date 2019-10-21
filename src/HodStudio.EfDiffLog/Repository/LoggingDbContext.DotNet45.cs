@@ -1,13 +1,12 @@
 ﻿#if NETFULL
 using HodStudio.EfDiffLog.Model;
 using System;
-using System.Data.Entity;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace HodStudio.EfDiffLog.Repository
 {
@@ -48,18 +47,6 @@ namespace HodStudio.EfDiffLog.Repository
             base.OnModelCreating(modelBuilder);
         }
 
-        public override int SaveChanges()
-        {
-            this.LogChanges(UserId);
-            var result = base.SaveChanges();
-            if (IdGeneratedByDatabase)
-            {
-                this.LogChangesAddedEntities(UserId);
-                result = base.SaveChanges();
-            }
-            return result;
-        }
-
         public override Task<int> SaveChangesAsync()
         {
             if (IdGeneratedByDatabase)
@@ -67,18 +54,6 @@ namespace HodStudio.EfDiffLog.Repository
 
             this.LogChanges(UserId);
             return base.SaveChangesAsync();
-        }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await this.LogChangesAsync(UserId);
-            var result = await base.SaveChangesAsync(cancellationToken);
-            if (IdGeneratedByDatabase)
-            {
-                await this.LogChangesAddedEntitiesAsync(UserId);
-                result = await base.SaveChangesAsync(cancellationToken);
-            }
-            return result;
         }
     }
 }
