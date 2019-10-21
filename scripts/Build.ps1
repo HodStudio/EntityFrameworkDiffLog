@@ -69,14 +69,17 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
-echo "Starting Sonar"
-exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
-
+echo "Build entire solution"
 exec { & dotnet build -c Release }
 
-exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
-
 exec { & dotnet test -c Release }
+
+echo "Starting Sonar for Library"
+exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+
+exec { & dotnet build $projectPath -c Release }
+
+exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
 echo "Packing the library"
 exec { & dotnet pack $projectPath -c Release -o .\..\..\artifacts --version-suffix=$revision }
