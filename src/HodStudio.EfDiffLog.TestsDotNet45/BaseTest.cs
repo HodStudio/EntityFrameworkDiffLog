@@ -2,32 +2,41 @@
 using HodStudio.EfDiffLog.TestsDotNet45.Data;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 
 namespace HodStudio.EfDiffLog.TestsDotNetCore
 {
     public class BaseTest
     {
+        public static bool Initialized = false;
+
         protected AppDbContext Context { get; private set; }
+
+        protected static DbContextOptions<AppDbContext> Options { get; set; }
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            LoggingContext.InitializeIdColumnNames(typeof(AppDbContext).Assembly);
+            if (!Initialized)
+            {
+                var builder = new DbContextOptionsBuilder<AppDbContext>();
+                builder.UseInMemoryDatabase($"HsEfDiffLog");
+                Options = builder.Options;
+
+                LoggingContext.InitializeIdColumnNames(typeof(AppDbContext).Assembly);
+                Initialized = true;
+            }
         }
 
         [SetUp]
         public void SetUp()
         {
-            DbContextOptions<AppDbContext> options;
-            var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseInMemoryDatabase($"HsEfDiffLog-{Guid.NewGuid()}");
-            options = builder.Options;
-
-            Context = new AppDbContext(options);
+            CreateContext();
 
             Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
         }
+
+        protected void CreateContext()
+            => Context = new AppDbContext(Options);
     }
 }
