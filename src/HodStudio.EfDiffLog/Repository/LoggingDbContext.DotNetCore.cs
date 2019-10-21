@@ -23,6 +23,23 @@ namespace HodStudio.EfDiffLog.Repository
             base.OnModelCreating(modelBuilder);
         }
 
+        /// <summary>
+        /// Saves all changes made in this context to the database and create diff logs using the HodStudio.EfDiffLog.
+        /// 
+        /// Please, pay attention that if you are using the EfDiffLog.IdGeneratedByDatabase configured to true, this method should not be used.
+        /// </summary>
+        /// <remarks> 
+        /// This method will automatically call Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges
+        /// to discover any changes to entity instances before saving to the underlying database.
+        /// This can be disabled via Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled.
+        /// 
+        /// Please, pay attention that if you are using the EfDiffLog.IdGeneratedByDatabase configured to true, this method should not be used.
+        /// To continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".
+        /// </remarks>
+        /// <param name="acceptAllChangesOnSuccess">Indicates whether Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AcceptAllChanges is called after the changes have been sent successfully to the database.</param>
+        /// <returns>The number of state entries written to the database.</returns>
+        /// <exception cref="DbUpdateException">An error is encountered while saving to the database.</exception>
+        /// <exception cref="InvalidOperationException">You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".</exception>
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             if (IdGeneratedByDatabase)
