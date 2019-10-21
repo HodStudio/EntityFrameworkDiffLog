@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByDatabase
 {
-    public class IdGeneratedByDatabaseBaseTest : BaseTest
+    public class IdGeneratedByDatabaseBaseTests : BaseTest
     {
         protected virtual string Operation { get; set; }
 

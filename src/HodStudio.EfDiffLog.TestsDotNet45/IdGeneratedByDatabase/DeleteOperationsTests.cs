@@ -1,12 +1,29 @@
-﻿using NUnit.Framework;
+﻿using HodStudio.EfDiffLog.TestsDotNet45.Model;
+using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByDatabase
 {
-    public class InsertOperations : IdGeneratedByDatabaseBaseTest
+    public class DeleteOperationsTests : IdGeneratedByDatabaseBaseTests
     {
-        protected override string Operation { get; set; } = "Added";
+        protected override string Operation { get; set; } = "Deleted";
+
+        protected override User PrepareUser()
+        {
+            var original = base.PrepareUser();
+            Context.SaveChanges();
+
+            CreateContext();
+
+            Context.Users.Remove(original);
+            return original;
+        }
+
+        protected override void ValidateUser(User user)
+        {
+            Assert.IsNull(GetUser(user));
+        }
 
         [Test]
         public void SaveChanges()
@@ -62,6 +79,7 @@ namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByDatabase
         {
             var user = PrepareUser();
             await Context.SaveChangesAsync(false);
+            CreateContext();
             ValidateNoLog(user);
         }
     }

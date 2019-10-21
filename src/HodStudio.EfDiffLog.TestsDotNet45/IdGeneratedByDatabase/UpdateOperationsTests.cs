@@ -5,82 +5,92 @@ using System.Threading.Tasks;
 
 namespace HodStudio.EfDiffLog.TestsDotNetCore.IdGeneratedByDatabase
 {
-    public class DeleteOperations : IdGeneratedByDatabaseBaseTest
+    public class UpdateOperationsTests : IdGeneratedByDatabaseBaseTests
     {
-        protected override string Operation { get; set; } = "Deleted";
+        protected override string Operation { get; set; } = "Modified";
 
-        protected override User PrepareUser()
+        protected new(User, User) PrepareUser()
         {
             var original = base.PrepareUser();
             Context.SaveChanges();
 
             CreateContext();
 
-            Context.Users.Remove(original);
-            return original;
+            var updated = CreateUser();
+            updated.Id = original.Id;
+
+            Context.Users.Update(updated);
+            return (original, updated);
         }
 
-        protected override void ValidateUser(User user)
+        protected void Validate(User original, User updated)
         {
-            Assert.IsNull(GetUser(user));
+            ValidateUser(updated);
+
+            var currentLog = GetLog(updated);
+            Assert.IsNotNull(currentLog);
+
+            var expected = string.Format("{{\"Email\":[\"{0}\",\"{1}\"],\"Name\":[\"{2}\",\"{3}\"]}}",
+                original.Email, updated.Email,
+                original.Name, updated.Name);
+            Assert.AreEqual(expected, currentLog.ValuesChanges);
         }
 
         [Test]
         public void SaveChanges()
         {
-            var user = PrepareUser();
+            var (original, updated) = PrepareUser();
             Context.SaveChanges();
-            Validate(user);
+            Validate(original, updated);
         }
 
         [Test]
         public void SaveChangesWithAcceptAllChangesOnSuccessTrue()
         {
-            var user = PrepareUser();
+            var (_, updated) = PrepareUser();
             Context.SaveChanges(true);
-            ValidateNoLog(user);
+            ValidateNoLog(updated);
         }
 
         [Test]
         public void SaveChangesWithAcceptAllChangesOnSuccessFalse()
         {
-            var user = PrepareUser();
+            var (_, updated) = PrepareUser();
             Context.SaveChanges(true);
-            ValidateNoLog(user);
+            ValidateNoLog(updated);
         }
 
         [Test]
         public async Task SaveChangesAsync()
         {
-            var user = PrepareUser();
+            var (original, updated) = PrepareUser();
             await Context.SaveChangesAsync();
-            Validate(user);
+            Validate(original, updated);
         }
 
         [Test]
         public async Task SaveChangesAsyncCancelationToken()
         {
-            var user = PrepareUser();
+            var (original, updated) = PrepareUser();
             var cancelToken = new CancellationToken();
             await Context.SaveChangesAsync(cancelToken);
-            Validate(user);
+            Validate(original, updated);
         }
 
         [Test]
         public async Task SaveChangesWithAcceptAllChangesOnSuccessTrueAsync()
         {
-            var user = PrepareUser();
+            var (_, updated) = PrepareUser();
             await Context.SaveChangesAsync(true);
-            ValidateNoLog(user);
+            ValidateNoLog(updated);
         }
 
         [Test]
         public async Task SaveChangesWithAcceptAllChangesOnSuccessFalseAsync()
         {
-            var user = PrepareUser();
+            var (_, updated) = PrepareUser();
             await Context.SaveChangesAsync(false);
-            CreateContext();
-            ValidateNoLog(user);
+            ValidateNoLog(updated);
         }
     }
 }
