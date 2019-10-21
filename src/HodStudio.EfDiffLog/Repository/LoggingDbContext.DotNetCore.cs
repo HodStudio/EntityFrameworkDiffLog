@@ -2,6 +2,7 @@
 using HodStudio.EfDiffLog.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,26 +25,20 @@ namespace HodStudio.EfDiffLog.Repository
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            this.LogChanges(UserId);
-            var result = base.SaveChanges(acceptAllChangesOnSuccess);
             if (IdGeneratedByDatabase)
-            {
-                this.LogChangesAddedEntities(UserId);
-                result = base.SaveChanges(acceptAllChangesOnSuccess);
-            }
-            return result;
+                throw new InvalidOperationException("You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChanges()\".");
+
+            this.LogChanges(UserId);
+            return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            await this.LogChangesAsync(UserId);
-            var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
             if (IdGeneratedByDatabase)
-            {
-                await this.LogChangesAddedEntitiesAsync(UserId);
-                result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-            }
-            return result;
+                throw new InvalidOperationException("You can't use the SaveChangesAsync with the \"acceptAllChangesOnSuccess\" parameter while using the \"IdGeneratedByDatabase\" configured to true. Please, to continue using this overload, configure the \"IdGeneratedByDatabase\" to false, or use the overload that has no parameters \"SaveChangesAsync()\".");
+
+            await this.LogChangesAsync(UserId);
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }
