@@ -32,7 +32,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNet45.IdGeneratedByApp
             var currentLog = GetLog(updated);
             Assert.IsNotNull(currentLog);
 
-            var expected = string.Format("{{\"Code\":[\"{2}\",\"{3}\"],\"Budget\":[{0:N1},{1:N1}]}}",
+            var expected = string.Format("{{\"Code\":[\"{2}\",\"{3}\"],\"Budget\":[{0},{1}]}}",
                 original.Budget, updated.Budget,
                 original.Code, updated.Code);
             Assert.AreEqual(expected, currentLog.ValuesChanges);

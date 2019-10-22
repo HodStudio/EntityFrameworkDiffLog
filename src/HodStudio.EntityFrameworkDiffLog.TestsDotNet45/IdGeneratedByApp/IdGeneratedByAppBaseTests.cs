@@ -17,7 +17,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNet45.IdGeneratedByApp
             => new Department()
             {
                 Code = Guid.NewGuid(),
-                Budget = DateTime.Now.Millisecond - (new Random()).Next(0, 100)
+                Budget = DateTime.Now.Ticks
             };
 
         protected virtual Department PrepareDepartment()
@@ -50,7 +50,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNet45.IdGeneratedByApp
             var currentLog = GetLog(department);
             Assert.IsNotNull(currentLog);
 
-            var expected = string.Format("{{\"Id\":[\"{0}\"],\"Code\":[\"{2}\"],\"Budget\":[{1:N1}]}}",
+            var expected = string.Format("{{\"Id\":[\"{0}\"],\"Code\":[\"{2}\"],\"Budget\":[{1}]}}",
                 department.Id, department.Budget, department.Code);
             Assert.AreEqual(expected, currentLog.ValuesChanges);
         }
