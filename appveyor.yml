@@ -23,3 +23,5 @@ deploy:
   on:
     branch: master
     appveyor_repo_tag: true
+services:
+  - mssql2012sp1

@@ -49,6 +49,20 @@ echo "Complete project version: $($completeVersion)"
 # Restore packages
 echo "Restoring packages"
 exec { & dotnet restore }
+exec { & .\tools\NuGet.exe restore .\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.csproj -PackagesDirectory .\packages }
+
+echo "Build entire solution"
+exec { & dotnet build -c Release }
+
+echo "Tests Core version"
+exec { & dotnet test -c Release }
+
+echo "Adjust Configuration for Tests 4.5"
+Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
+Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
+
+echo "Tests 4.5 version"
+exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" }
 
 # Sonar Analysis
 echo "Installing sonarscanner"
@@ -69,11 +83,6 @@ Catch
     }
     else { echo "sonarscanner already installed" }
 }
-
-echo "Build entire solution"
-exec { & dotnet build -c Release }
-
-exec { & dotnet test -c Release }
 
 echo "Starting Sonar for Library"
 

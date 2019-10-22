@@ -1,6 +1,5 @@
 ﻿#if NETFULL
 using HodStudio.EntityFrameworkDiffLog.Model;
-using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
@@ -47,12 +46,30 @@ namespace HodStudio.EntityFrameworkDiffLog.Repository
             base.OnModelCreating(modelBuilder);
         }
 
+        /// <summary>
+        /// Asynchronously saves all changes made in this context to the underlying database.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous save operation. 
+        /// Because we create the logs in run time, the return will be the number of logs
+        /// related saved on the database, and not the original from the method.
+        /// In case that you uses "IdGeneratedByDatabase", the first save will not be 
+        /// asyncronous, only the second one. We recommend to use the version with 
+        /// the CancellationToken, which uses the await.
+        /// </returns>
+        /// <remarks>
+        /// Multiple active operations on the same context instance are not supported. Use
+        /// 'await' to ensure that any asynchronous operations have completed before calling
+        /// another method on this context.
+        /// </remarks>
         public override Task<int> SaveChangesAsync()
         {
-            if (IdGeneratedByDatabase)
-                throw new InvalidOperationException("You can't use the SaveChangesAsync without the await parameter if you have the \"IdGeneratedByDatabase\" configured to true. Use the overload that uses the await call.");
-
             this.LogChanges(UserId);
+            if (!IdGeneratedByDatabase)
+                return base.SaveChangesAsync();
+
+            base.SaveChangesAsync().GetAwaiter().GetResult();
+            this.LogChangesAddedEntities(UserId);
             return base.SaveChangesAsync();
         }
     }
