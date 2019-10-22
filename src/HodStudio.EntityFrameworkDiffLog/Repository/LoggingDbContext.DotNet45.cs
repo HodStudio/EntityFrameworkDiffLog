@@ -1,6 +1,5 @@
 ﻿#if NETFULL
 using HodStudio.EntityFrameworkDiffLog.Model;
-using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
