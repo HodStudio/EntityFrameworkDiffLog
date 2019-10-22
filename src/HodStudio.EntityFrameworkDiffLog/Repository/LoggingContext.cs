@@ -53,7 +53,7 @@ namespace HodStudio.EntityFrameworkDiffLog.Repository
 
         private static async Task LogChangesAsync(this LoggingDbContext context, string userId, bool asyncOperation)
         {
-            var logTime = DateTime.Now;
+            var logTime = context.UseUtcTime ? DateTime.UtcNow : DateTime.Now;
             var changes = context.ChangeTracker.Entries()
                             .Where(x => entityStates.Contains(x.State)
                                 && GetEntityType(x.Entity.GetType()) != null)
@@ -81,7 +81,7 @@ namespace HodStudio.EntityFrameworkDiffLog.Repository
 
         private static async Task LogChangesAddedEntitiesAsync(this LoggingDbContext context, string userId, bool asyncOperation)
         {
-            var logTime = DateTime.Now;
+            var logTime = context.UseUtcTime ? DateTime.UtcNow : DateTime.Now;
             var jdp = new JsonDiffPatch();
 
             foreach (var item in context.AddedEntities)

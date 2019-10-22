@@ -17,6 +17,7 @@ namespace HodStudio.EntityFrameworkDiffLog.Repository
         protected string LogEntriesSchemaName { get; set; } = "dbo";
 
         public bool IdGeneratedByDatabase { get; set; } = true;
+        public bool UseUtcTime { get; set; } = true;
 
         public DbSet<LogEntry> LogEntries { get; set; }
 
