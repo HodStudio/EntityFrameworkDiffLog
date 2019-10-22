@@ -131,6 +131,15 @@ public SchoolContext()
 }
 ```
 
+### If you don't want to use UTC for log time
+As the library can be used in several places with different timezones, the default configuration is to use Utc. However, if your application is only used in one timezone, you can configure the library to use the time in the current timezone.
+```cs
+public SchoolContext()
+{
+    UseUtcTime = false;
+}
+```
+
 ## Examples
 The source code contains two examples: one for .Net 4.5 and another for .Net Core 2.2. Both of them are the official tutorials projects from Microsoft. For more information about them, please, take a look at the links below:
 - .Net 4.5: https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application
