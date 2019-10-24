@@ -64,7 +64,12 @@ Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Rele
 #echo "Tests 4.5 version"
 #exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" }
 
-exec { & nunit3-console **\*.Tests*.dll --result=myresults.xml;format=AppVeyor }
+echo "Run Tests"
+exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.dll" --result=nunit-results.xml }
+
+echo "Upload results to AppVeyor"
+$wc = New-Object 'System.Net.WebClient'
+$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\nunit-results.xml))
 
 # Sonar Analysis
 echo "Installing sonarscanner"
