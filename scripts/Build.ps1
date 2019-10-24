@@ -54,15 +54,17 @@ exec { & .\tools\NuGet.exe restore .\src\HodStudio.EntityFrameworkDiffLog.TestsD
 echo "Build entire solution"
 exec { & dotnet build -c Release }
 
-echo "Tests Core version"
-exec { & dotnet test -c Release }
+#echo "Tests Core version"
+#exec { & dotnet test -c Release }
 
 echo "Adjust Configuration for Tests 4.5"
 Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 
-echo "Tests 4.5 version"
-exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" }
+#echo "Tests 4.5 version"
+#exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" }
+
+exec { & nunit3-console **\*.Tests*.dll --result=myresults.xml;format=AppVeyor }
 
 # Sonar Analysis
 echo "Installing sonarscanner"
