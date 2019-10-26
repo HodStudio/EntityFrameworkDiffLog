@@ -57,6 +57,8 @@ exec { & dotnet build -c Release }
 echo "Tests Core version"
 dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=TestResults\core-results.xml"
 
+$corePassed = $lastexitcode
+
 echo "Adjust Configuration for Tests 4.5"
 Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
@@ -64,10 +66,29 @@ Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Rele
 echo "Tests 4.5 version"
 .\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe .\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result=.\TestResults\net45-results.xml
 
+$net45Passed = $lastexitcode
+
 echo "Upload results to AppVeyor"
 $wc = New-Object 'System.Net.WebClient'
 $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\TestResults\net45-results.xml" ))
 $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\TestResults\core-results.xml" ))
+
+$errorMessage = $NULL
+
+if ($corePassed -ne 0)
+{
+	$errorMessage = ".Net Core tests failed`r`n"
+}
+
+if ($net45Passed -ne 0)
+{
+    $errorMessage = $errorMessage + ".Net 4.5 tests failed`r`n"
+}
+
+if ($errorMessage -ne $NULL)
+{
+    throw $errorMessage
+}
 
 # Sonar Analysis
 echo "Installing sonarscanner"
