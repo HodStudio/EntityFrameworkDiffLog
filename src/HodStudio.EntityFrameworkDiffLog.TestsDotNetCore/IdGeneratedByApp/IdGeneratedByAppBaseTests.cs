@@ -17,7 +17,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
             => new Department()
             {
                 EffectiveFrom = DateTime.Now.AddDays(-DateTime.Now.Millisecond),
-                Budget = DateTime.Now.Millisecond - (new Random()).Next(0, 100)
+                Budget = DateTime.Now.Millisecond
             };
 
         protected virtual Department PrepareDepartment()

@@ -18,6 +18,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
 
             var updated = CreateDepartment();
             updated.Id = original.Id;
+            updated.Budget = original.Budget + 10;
 
             Context.Departments.Update(updated);
             return (original, updated);
