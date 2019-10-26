@@ -4,8 +4,23 @@
 
 _An easy way to create entity changes' log using Entity Framework_
 
+[![License](https://img.shields.io/github/license/hodstudio/entityframeworkdifflog)](https://github.com/HodStudio/EntityFrameworkDiffLog/blob/master/LICENSE.md)
+[![Nuget](https://img.shields.io/nuget/dt/HodStudio.EntityFrameworkDiffLog)](https://www.nuget.org/packages/HodStudio.EntityFrameworkDiffLog/)
+[![GitHub issues by-label](https://img.shields.io/github/issues-raw/hodstudio/entityframeworkdifflog/bug)](https://github.com/HodStudio/EntityFrameworkDiffLog/labels/bug)
+
 [![Build status](https://ci.appveyor.com/api/projects/status/1r9ebih0q0ntqfu4?svg=true)](https://ci.appveyor.com/project/Cussa/entityframeworkdifflog)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=alert_status)](https://sonarcloud.io/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=bugs)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![CodeSmells](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=code_smells)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=vulnerabilities)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=duplicated_lines_density)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![sqale_index](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_index)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=reliability_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) [![security_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=security_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) 
+![AppVeyor tests (compact)](https://img.shields.io/appveyor/tests/hodstudio/entityframeworkdifflog?compact_message)
+
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=alert_status)](https://sonarcloud.io/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=reliability_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![security_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=security_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog) 
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=bugs)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=vulnerabilities)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![CodeSmells](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=code_smells)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_index)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
+[![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=duplicated_lines_density)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
 
 During 2018, we worked on an open-source project, and one of the exciting things that we did there was to create an excellent way to have an entity changes' logs. The solution was exciting, but not so good if you wanted to reuse that. So, we decided to create a library to make it easier for anyone that wants to use it!
 
