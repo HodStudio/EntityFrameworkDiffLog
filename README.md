@@ -5,11 +5,13 @@
 _An easy way to create entity changes' log using Entity Framework_
 
 [![License](https://img.shields.io/github/license/hodstudio/entityframeworkdifflog)](https://github.com/HodStudio/EntityFrameworkDiffLog/blob/master/LICENSE.md)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/hodstudio/entityframeworkdifflog)](https://github.com/HodStudio/EntityFrameworkDiffLog/releases)
+[![GitHub Release Date](https://img.shields.io/github/release-date/hodstudio/entityframeworkdifflog)](https://github.com/HodStudio/EntityFrameworkDiffLog/releases)
 [![Nuget](https://img.shields.io/nuget/dt/HodStudio.EntityFrameworkDiffLog)](https://www.nuget.org/packages/HodStudio.EntityFrameworkDiffLog/)
 [![GitHub issues by-label](https://img.shields.io/github/issues-raw/hodstudio/entityframeworkdifflog/bug)](https://github.com/HodStudio/EntityFrameworkDiffLog/labels/bug)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/1r9ebih0q0ntqfu4?svg=true)](https://ci.appveyor.com/project/Cussa/entityframeworkdifflog)
-[![AppVeyor tests (compact)](https://img.shields.io/appveyor/tests/hodstudio/entityframeworkdifflog?compact_message)](https://ci.appveyor.com/project/Cussa/entityframeworkdifflog/build/tests)
+[![AppVeyor tests (compact)](https://img.shields.io/appveyor/tests/hodstudio/entityframeworkdifflog?compact_message&logo=appveyor)](https://ci.appveyor.com/project/Cussa/entityframeworkdifflog/build/tests)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=alert_status)](https://sonarcloud.io/dashboard?id=HodStudio.EntityFrameworkDiffLog)
 [![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)
