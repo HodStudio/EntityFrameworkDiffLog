@@ -66,8 +66,8 @@ exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src
 
 echo "Upload results to AppVeyor"
 $wc = New-Object 'System.Net.WebClient'
-$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\TestResults\core-results.xml" ))
 $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\TestResults\net45-results.xml" ))
+$wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\TestResults\core-results.xml" ))
 
 # Sonar Analysis
 echo "Installing sonarscanner"
