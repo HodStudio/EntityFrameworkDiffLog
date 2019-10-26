@@ -55,14 +55,14 @@ echo "Build entire solution"
 exec { & dotnet build -c Release }
 
 echo "Tests Core version"
-exec { & dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=TestResults\core-results.xml" }
+dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=TestResults\core-results.xml"
 
 echo "Adjust Configuration for Tests 4.5"
 Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 
 echo "Tests 4.5 version"
-exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" --result=.\TestResults\net45-results.xml }
+".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" --result=.\TestResults\net45-results.xml
 
 echo "Upload results to AppVeyor"
 $wc = New-Object 'System.Net.WebClient'
