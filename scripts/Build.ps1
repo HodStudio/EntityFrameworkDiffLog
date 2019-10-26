@@ -55,7 +55,7 @@ echo "Build entire solution"
 exec { & dotnet build -c Release }
 
 echo "Tests Core version"
-exec { & dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=TestResults\core-result.xml" }
+exec { & dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=TestResults\core-results.xml" }
 
 echo "Adjust Configuration for Tests 4.5"
 Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
