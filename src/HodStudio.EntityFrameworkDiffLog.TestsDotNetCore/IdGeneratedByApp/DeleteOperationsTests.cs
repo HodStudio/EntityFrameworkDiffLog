@@ -28,7 +28,6 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
         [Test]
         public void SaveChanges()
         {
-            Assert.IsTrue(false);
             var department = PrepareDepartment();
             Context.SaveChanges();
             Validate(department);
