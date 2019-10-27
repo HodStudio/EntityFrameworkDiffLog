@@ -130,6 +130,12 @@ Catch
     else { echo "reportgenerator already installed" }
 }
 
+$folder = Get-Location
+
+Get-ChildItem -Path $folder
+
+Get-ChildItem -Path "testresults" | -Resolve-Path -Relative
+
 echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
