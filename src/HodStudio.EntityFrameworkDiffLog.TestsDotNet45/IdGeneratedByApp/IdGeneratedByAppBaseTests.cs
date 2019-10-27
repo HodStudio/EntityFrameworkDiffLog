@@ -17,7 +17,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNet45.IdGeneratedByApp
             => new Department()
             {
                 Code = Guid.NewGuid(),
-                Budget = DateTime.Now.Ticks
+                Budget = DateTime.Now.Millisecond
             };
 
         protected virtual Department PrepareDepartment()

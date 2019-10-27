@@ -26,6 +26,7 @@ $projectPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFramework
 $libraryOnlySolutionPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.Library.sln"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
+if(Test-Path .\testresults) { Remove-Item .\testresults -Force -Recurse }
 
 # Version Configuration
 $csprojContent = Get-Content $projectPath
@@ -55,14 +56,40 @@ echo "Build entire solution"
 exec { & dotnet build -c Release }
 
 echo "Tests Core version"
-exec { & dotnet test -c Release }
+dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=$($env:APPVEYOR_BUILD_FOLDER)\TestResults\core-results.xml"
+
+$corePassed = $lastexitcode
 
 echo "Adjust Configuration for Tests 4.5"
 Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 
 echo "Tests 4.5 version"
-exec { & ".\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe" ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll" }
+.\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe .\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result="$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml"
+
+$net45Passed = $lastexitcode
+
+echo "Upload results to AppVeyor"
+$wc = New-Object 'System.Net.WebClient'
+$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml" ))
+$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\core-results.xml" ))
+
+$errorMessage = $NULL
+
+if ($corePassed -ne 0)
+{
+	$errorMessage = ".Net Core tests failed`r`n"
+}
+
+if ($net45Passed -ne 0)
+{
+    $errorMessage = $errorMessage + ".Net 4.5 tests failed`r`n"
+}
+
+if ($errorMessage -ne $NULL)
+{
+    throw $errorMessage
+}
 
 # Sonar Analysis
 echo "Installing sonarscanner"
@@ -84,20 +111,43 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
+echo "Installing reportgenerator"
+Try
+{
+    exec { & dotnet tool install -g dotnet-reportgenerator-globaltool }
+}
+Catch
+{
+    $needInstallSonar = dotnet tool list -g | Select-String -Pattern "dotnet-reportgenerator-globaltool" | % { $_.Matches.Value -eq $NULL }
+    if ($needInstallSonar -eq $true)
+    {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName
+        echo $FailedItem
+        echo $ErrorMessage
+        return -1
+    }
+    else { echo "reportgenerator already installed" }
+}
+
 echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" }
+	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" /d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 else 
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" /d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
+dotnet test -c Release -s "$($env:APPVEYOR_BUILD_FOLDER)\coverletArgs.runsettings" -r "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\"
+
+exec { & reportgenerator "-reports:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\*\*.xml" "-targetdir:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\" "-reporttypes:SonarQube" }
+
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
 echo "Packing the library"
-exec { & dotnet pack $projectPath -c Release -o .\..\..\artifacts --version-suffix=$revision }
+exec { & dotnet pack $projectPath -c Release -o "$($env:APPVEYOR_BUILD_FOLDER)\artifacts" --version-suffix=$revision }

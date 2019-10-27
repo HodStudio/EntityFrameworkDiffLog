@@ -17,7 +17,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
             => new Department()
             {
                 EffectiveFrom = DateTime.Now.AddDays(-DateTime.Now.Millisecond),
-                Budget = DateTime.Now.Millisecond - (new Random()).Next(0, 100)
+                Budget = DateTime.Now.Millisecond
             };
 
         protected virtual Department PrepareDepartment()
@@ -50,7 +50,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
             var currentLog = GetLog(department);
             Assert.IsNotNull(currentLog);
 
-            var expected = string.Format("{{\"Id\":[\"{0}\"],\"Budget\":[{1:N1}],\"EffectiveFrom\":[\"{2:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\"]}}",
+            var expected = string.Format("{{\"Id\":[\"{0}\"],\"Budget\":[{1:F1}],\"EffectiveFrom\":[\"{2:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\"]}}",
                 department.Id, department.Budget, department.EffectiveFrom);
             Assert.AreEqual(expected, currentLog.ValuesChanges);
         }

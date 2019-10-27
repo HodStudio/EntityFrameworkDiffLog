@@ -21,7 +21,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNet45.IdGeneratedByApp
 
             var updated = Context.Departments.Find(original.Id);
             var newDepartment = CreateDepartment();
-            updated.Budget = newDepartment.Budget;
+            updated.Budget = original.Budget + 10;
             updated.Code = newDepartment.Code;
 
             return (original, updated);
