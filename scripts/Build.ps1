@@ -50,7 +50,7 @@ echo "Complete project version: $($completeVersion)"
 # Restore packages
 echo "Restoring packages"
 exec { & dotnet restore }
-exec { & $($env:APPVEYOR_BUILD_FOLDER)\tools\NuGet.exe restore $($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.csproj -PackagesDirectory $($env:APPVEYOR_BUILD_FOLDER)\packages }
+exec { & .\tools\NuGet.exe restore $($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.csproj -PackagesDirectory $($env:APPVEYOR_BUILD_FOLDER)\packages }
 
 echo "Build entire solution"
 exec { & dotnet build -c Release }
