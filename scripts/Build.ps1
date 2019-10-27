@@ -130,12 +130,6 @@ Catch
     else { echo "reportgenerator already installed" }
 }
 
-$folder = Get-Location
-
-Get-ChildItem -Path $folder
-
-Get-ChildItem -Path "testresults" | -Resolve-Path -Relative
-
 echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
@@ -149,9 +143,11 @@ else
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
-dotnet test -c Release -s coverletArgs.runsettings -r ".\TestResults\"
+dotnet test -c Release -s ".\coverletArgs.runsettings" -r ".\TestResults\"
 
-exec { & reportgenerator "-reports:TestResults\*\*.xml" "-targetdir:TestResults\" "-reporttypes:SonarQube" }
+Get-ChildItem -Path "TestResults" | Resolve-Path -Relative
+
+exec { & reportgenerator "-reports:.\TestResults\*\*.xml" "-targetdir:TestResults\" "-reporttypes:SonarQube" }
 
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
