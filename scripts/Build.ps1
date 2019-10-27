@@ -145,6 +145,7 @@ if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 	/d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " `
 	/d:sonar.pullrequest.provider="GitHub" `
 	/d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" `
+	}
 	#/d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 else 
@@ -156,6 +157,7 @@ else
 	/d:sonar.sources="$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog" `
 	/d:sonar.host.url="https://sonarcloud.io" `
 	/version:"$completeVersion" `
+	}
 	#/d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 
