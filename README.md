@@ -12,6 +12,7 @@ _An easy way to create entity changes' log using Entity Framework_
 
 [![Build status](https://ci.appveyor.com/api/projects/status/1r9ebih0q0ntqfu4?svg=true)](https://ci.appveyor.com/project/Cussa/entityframeworkdifflog)
 [![AppVeyor tests (compact)](https://img.shields.io/appveyor/tests/cussa/entityframeworkdifflog?compact_message&logo=appveyor)](https://ci.appveyor.com/project/Cussa/entityframeworkdifflog/build/tests)
+[![Coverage Status](https://coveralls.io/repos/github/HodStudio/EntityFrameworkDiffLog/badge.svg?branch=master)](https://coveralls.io/github/HodStudio/EntityFrameworkDiffLog?branch=master)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=alert_status)](https://sonarcloud.io/dashboard?id=HodStudio.EntityFrameworkDiffLog)
 [![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=HodStudio.EntityFrameworkDiffLog&metric=sqale_rating)](https://sonarqube.com/dashboard?id=HodStudio.EntityFrameworkDiffLog)

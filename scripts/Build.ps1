@@ -56,7 +56,7 @@ echo "Build entire solution"
 exec { & dotnet build -c Release }
 
 echo "Tests Core version"
-dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=$($env:APPVEYOR_BUILD_FOLDER)\TestResults\core-results.xml"
+dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=$($env:APPVEYOR_BUILD_FOLDER)\TestResults\core-results.xml" -s "$($env:APPVEYOR_BUILD_FOLDER)\coverletArgs.runsettings" -r "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\"
 
 $corePassed = $lastexitcode
 
@@ -111,25 +111,6 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
-echo "Installing reportgenerator"
-Try
-{
-    exec { & dotnet tool install -g dotnet-reportgenerator-globaltool }
-}
-Catch
-{
-    $needInstallSonar = dotnet tool list -g | Select-String -Pattern "dotnet-reportgenerator-globaltool" | % { $_.Matches.Value -eq $NULL }
-    if ($needInstallSonar -eq $true)
-    {
-        $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName
-        echo $FailedItem
-        echo $ErrorMessage
-        return -1
-    }
-    else { echo "reportgenerator already installed" }
-}
-
 echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
@@ -146,7 +127,6 @@ if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 	/d:sonar.pullrequest.provider="GitHub" `
 	/d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" `
 	}
-	#/d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 else 
 {
@@ -158,16 +138,68 @@ else
 	/d:sonar.host.url="https://sonarcloud.io" `
 	/version:"$completeVersion" `
 	}
-	#/d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
-#dotnet test -c Release -s "$($env:APPVEYOR_BUILD_FOLDER)\coverletArgs.runsettings" -r "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\"
-
-#exec { & reportgenerator "-reports:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\*\*.xml" "-targetdir:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\" "-reporttypes:SonarQube" }
-
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
+
+echo "Code Coverage information"
+
+$opencoverFile = Get-ChildItem -Path "$($env:APPVEYOR_BUILD_FOLDER)\TestResults" -Filter coverage.opencover.xml -Recurse -ErrorAction SilentlyContinue -Force
+
+Copy-Item $opencoverFile.FullName -Destination "$($env:APPVEYOR_BUILD_FOLDER)\TestResults"
+
+echo "Installing coverralls"
+Try
+{
+    exec { & dotnet tool install -g coveralls.net }
+}
+Catch
+{
+    $needInstallSonar = dotnet tool list -g | Select-String -Pattern "coveralls.net" | % { $_.Matches.Value -eq $NULL }
+    if ($needInstallSonar -eq $true)
+    {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName
+        echo $FailedItem
+        echo $ErrorMessage
+        return -1
+    }
+    else { echo "coveralls already installed" }
+}
+if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
+{
+	exec { & csmacnz.Coveralls `
+	--opencover `
+	-i "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\coverage.opencover.xml" `
+	--repoToken $env:coverallstoken `
+	--useRelativePaths `
+	--commitId $env:APPVEYOR_REPO_COMMIT `
+	--commitBranch $env:APPVEYOR_REPO_BRANCH `
+	--commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR `
+	--commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL `
+	--commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE `
+	--jobId $env:APPVEYOR_BUILD_NUMBER `
+	--serviceName appveyor `
+	--pullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER
+	}
+}
+else {
+	exec { & csmacnz.Coveralls `
+	--opencover `
+	-i "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\coverage.opencover.xml" `
+	--repoToken $env:coverallstoken `
+	--useRelativePaths `
+	--commitId $env:APPVEYOR_REPO_COMMIT `
+	--commitBranch $env:APPVEYOR_REPO_BRANCH `
+	--commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR `
+	--commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL `
+	--commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE `
+	--jobId $env:APPVEYOR_BUILD_NUMBER `
+	--serviceName appveyor 
+	}
+}
 
 echo "Packing the library"
 exec { & dotnet pack $projectPath -c Release -o "$($env:APPVEYOR_BUILD_FOLDER)\artifacts" --version-suffix=$revision }
