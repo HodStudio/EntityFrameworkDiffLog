@@ -138,7 +138,7 @@ if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 	/d:sonar.login="$env:sonartoken" `
 	/key:"HodStudio.EntityFrameworkDiffLog" `
 	/o:"hodstudio-github" `
-	/d:sonar.sources="$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog" `
+	/d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" `
 	/d:sonar.host.url="https://sonarcloud.io" `
 	/d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" `
 	/d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" `
@@ -154,7 +154,7 @@ else
 	/d:sonar.login="$env:sonartoken" `
 	/key:"HodStudio.EntityFrameworkDiffLog" `
 	/o:"hodstudio-github" `
-	/d:sonar.sources="$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog" `
+	/d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" `
 	/d:sonar.host.url="https://sonarcloud.io" `
 	/version:"$completeVersion" `
 	}
