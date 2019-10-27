@@ -38,6 +38,9 @@ exec { & dotnet build -c Release }
 echo "Tests Core version"
 dotnet test -c Release -s coverletArgs.runsettings -r ".\TestResults\"
 
+$opencoverFile = Get-ChildItem -Path .\TestResults -Filter coverage.opencover.xml -Recurse -ErrorAction SilentlyContinue -Force
+Copy-Item $opencoverFile.FullName -Destination ".\TestResults"
+
 echo "Installing reportgenerator"
 Try
 {
@@ -57,4 +60,4 @@ Catch
     else { echo "reportgenerator already installed" }
 }
 
-exec { & reportgenerator "-reports:TestResults\*\*.xml" "-targetdir:TestResults\" "-reporttypes:Badges;Html;SonarQube" }
+exec { & reportgenerator "-reports:TestResults\*\*.xml" "-targetdir:TestResults\" "-reporttypes:Badges;Html" }
