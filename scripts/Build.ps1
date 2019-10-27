@@ -22,8 +22,8 @@ function Exec
     }
 }
 
-$projectPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj"
-$libraryOnlySolutionPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.Library.sln"
+$projectPath = "$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.csproj"
+$libraryOnlySolutionPath = "$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.Library.sln"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 if(Test-Path .\testresults) { Remove-Item .\testresults -Force -Recurse }
@@ -61,8 +61,8 @@ dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=$($env:
 $corePassed = $lastexitcode
 
 echo "Adjust Configuration for Tests 4.5"
-Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
-Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
+Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
+Rename-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 
 echo "Tests 4.5 version"
 .\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe .\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result="$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml"
@@ -134,11 +134,29 @@ echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" /d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
+	exec { & dotnet sonarscanner begin `
+	/d:sonar.login="$env:sonartoken" `
+	/key:"HodStudio.EntityFrameworkDiffLog" `
+	/o:"hodstudio-github" `
+	/d:sonar.sources="$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog" `
+	/d:sonar.host.url="https://sonarcloud.io" `
+	/d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" `
+	/d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" `
+	/d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " `
+	/d:sonar.pullrequest.provider="GitHub" `
+	/d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" `
+	/d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 else 
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" /d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
+	exec { & dotnet sonarscanner begin `
+	/d:sonar.login="$env:sonartoken" `
+	/key:"HodStudio.EntityFrameworkDiffLog" `
+	/o:"hodstudio-github" `
+	/d:sonar.sources="$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog" `
+	/d:sonar.host.url="https://sonarcloud.io" `
+	/version:"$completeVersion" `
+	/d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
