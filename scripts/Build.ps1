@@ -143,11 +143,11 @@ else
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
-dotnet test -c Release -s ".\coverletArgs.runsettings" -r ".\TestResults\"
+dotnet test -c Release -s "..\coverletArgs.runsettings" -r ".\TestResults\"
 
 Get-ChildItem -Path "TestResults" | Resolve-Path -Relative
 
-exec { & reportgenerator "-reports:.\TestResults\*\*.xml" "-targetdir:TestResults\" "-reporttypes:SonarQube" }
+exec { & reportgenerator "-reports:..\TestResults\*\*.xml" "-targetdir:..\TestResults\" "-reporttypes:SonarQube" }
 
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
