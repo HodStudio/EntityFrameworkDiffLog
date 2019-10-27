@@ -7,6 +7,8 @@ branches:
 environment:
    sonartoken:
      secure: DRj3fNloTg/lBt6VibH5zebVnMv0pF7+lXBkaR28lR4Iu3g4KSyXl6Vn+Ni/Nx96
+   coverallstoken:
+     secure: rq9rS0GTzSpI+qdT6UjfOphfjLRxUKqwPdY+CzM4rH1Iq68orl6bhFI7e051lPuA
 nuget:
   disable_publish_on_pr: true
 build_script:
