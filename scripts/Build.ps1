@@ -168,19 +168,37 @@ Catch
     }
     else { echo "coveralls already installed" }
 }
-
-exec { & csmacnz.Coveralls `
---opencover `
--i "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\coverage.opencover.xml" `
---repoToken $env:coverallstoken `
---useRelativePaths `
---commitId $env:APPVEYOR_REPO_COMMIT `
---commitBranch $env:APPVEYOR_REPO_BRANCH `
---commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR `
---commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL `
---commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE `
---jobId $env:APPVEYOR_BUILD_NUMBER `
---serviceName appveyor 
+if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
+{
+	exec { & csmacnz.Coveralls `
+	--opencover `
+	-i "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\coverage.opencover.xml" `
+	--repoToken $env:coverallstoken `
+	--useRelativePaths `
+	--commitId $env:APPVEYOR_REPO_COMMIT `
+	--commitBranch $env:APPVEYOR_REPO_BRANCH `
+	--commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR `
+	--commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL `
+	--commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE `
+	--jobId $env:APPVEYOR_BUILD_NUMBER `
+	--serviceName appveyor `
+	--pullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER
+	}
+}
+else {
+	exec { & csmacnz.Coveralls `
+	--opencover `
+	-i "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\coverage.opencover.xml" `
+	--repoToken $env:coverallstoken `
+	--useRelativePaths `
+	--commitId $env:APPVEYOR_REPO_COMMIT `
+	--commitBranch $env:APPVEYOR_REPO_BRANCH `
+	--commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR `
+	--commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL `
+	--commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE `
+	--jobId $env:APPVEYOR_BUILD_NUMBER `
+	--serviceName appveyor 
+	}
 }
 
 echo "Packing the library"
