@@ -50,7 +50,7 @@ namespace HodStudio.EntityFrameworkDiffLog.TestsDotNetCore.IdGeneratedByApp
             var currentLog = GetLog(department);
             Assert.IsNotNull(currentLog);
 
-            var expected = string.Format("{{\"Id\":[\"{0}\"],\"Budget\":[{1:N1}],\"EffectiveFrom\":[\"{2:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\"]}}",
+            var expected = string.Format("{{\"Id\":[\"{0}\"],\"Budget\":[{1:F1}],\"EffectiveFrom\":[\"{2:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\"]}}",
                 department.Id, department.Budget, department.EffectiveFrom);
             Assert.AreEqual(expected, currentLog.ValuesChanges);
         }
