@@ -143,13 +143,13 @@ else
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
-dotnet test -c Release -s "..\coverletArgs.runsettings" -r ".\TestResults\"
+dotnet test -c Release -s "$($env:APPVEYOR_BUILD_FOLDER)\coverletArgs.runsettings" -r "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\"
 
 Get-ChildItem -Path "TestResults" | Resolve-Path -Relative
 
-exec { & reportgenerator "-reports:..\TestResults\*\*.xml" "-targetdir:..\TestResults\" "-reporttypes:SonarQube" }
+exec { & reportgenerator "-reports:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\*\*.xml" "-targetdir:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\" "-reporttypes:SonarQube" }
 
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
 echo "Packing the library"
-exec { & dotnet pack $projectPath -c Release -o .\..\..\artifacts --version-suffix=$revision }
+exec { & dotnet pack $projectPath -c Release -o "$($env:APPVEYOR_BUILD_FOLDER)\artifacts" --version-suffix=$revision }
