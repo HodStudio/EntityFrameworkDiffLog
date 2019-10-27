@@ -56,7 +56,7 @@ echo "Build entire solution"
 exec { & dotnet build -c Release }
 
 echo "Tests Core version"
-dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=TestResults\core-results.xml"
+dotnet test -c Release --test-adapter-path:. --logger:"nunit;LogFilePath=$($env:APPVEYOR_BUILD_FOLDER)\TestResults\core-results.xml"
 
 $corePassed = $lastexitcode
 
@@ -65,14 +65,14 @@ Remove-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Rele
 Rename-Item -Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 
 echo "Tests 4.5 version"
-.\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe .\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result=.\TestResults\net45-results.xml
+.\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe .\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result="$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml"
 
 $net45Passed = $lastexitcode
 
 echo "Upload results to AppVeyor"
 $wc = New-Object 'System.Net.WebClient'
-$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\TestResults\net45-results.xml" ))
-$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ".\src\HodStudio.EntityFrameworkDiffLog.TestsDotNetCore\TestResults\core-results.xml" ))
+$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml" ))
+$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\core-results.xml" ))
 
 $errorMessage = $NULL
 
@@ -134,18 +134,16 @@ echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" /d:sonar.coverageReportPaths=".\testresults\SonarQube.xml" }
+	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" /d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 else 
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" /d:sonar.coverageReportPaths=".\testresults\SonarQube.xml" }
+	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" /d:sonar.coverageReportPaths="$($env:APPVEYOR_BUILD_FOLDER)\testresults\SonarQube.xml" }
 }
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
 
 dotnet test -c Release -s "$($env:APPVEYOR_BUILD_FOLDER)\coverletArgs.runsettings" -r "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\"
-
-Get-ChildItem -Path "TestResults" | Resolve-Path -Relative
 
 exec { & reportgenerator "-reports:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\*\*.xml" "-targetdir:$($env:APPVEYOR_BUILD_FOLDER)\TestResults\" "-reporttypes:SonarQube" }
 
