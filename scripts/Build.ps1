@@ -171,7 +171,7 @@ Catch
 
 exec { & csmacnz.Coveralls `
 --opencover `
--i coverage.opencover.xml `
+-i "$($env:APPVEYOR_BUILD_FOLDER)\TestResults\coverage.opencover.xml" `
 --repoToken $env:coverrallstoken `
 --useRelativePaths `
 --commitId $env:APPVEYOR_REPO_COMMIT `
