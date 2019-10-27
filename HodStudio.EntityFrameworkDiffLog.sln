@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{928F
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 		scripts\Build.ps1 = scripts\Build.ps1
+		scripts\Coverage.ps1 = scripts\Coverage.ps1
+		coverletArgs.runsettings = coverletArgs.runsettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{CC632624-6456-4EE6-AF19-CD1B4E206C3F}"

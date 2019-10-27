@@ -26,6 +26,7 @@ $projectPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFramework
 $libraryOnlySolutionPath = ".\src\HodStudio.EntityFrameworkDiffLog\HodStudio.EntityFrameworkDiffLog.Library.sln"
 
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
+if(Test-Path .\testresults) { Remove-Item .\testresults -Force -Recurse }
 
 # Version Configuration
 $csprojContent = Get-Content $projectPath
@@ -110,18 +111,41 @@ Catch
     else { echo "sonarscanner already installed" }
 }
 
+echo "Installing reportgenerator"
+Try
+{
+    exec { & dotnet tool install -g dotnet-reportgenerator-globaltool }
+}
+Catch
+{
+    $needInstallSonar = dotnet tool list -g | Select-String -Pattern "dotnet-reportgenerator-globaltool" | % { $_.Matches.Value -eq $NULL }
+    if ($needInstallSonar -eq $true)
+    {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName
+        echo $FailedItem
+        echo $ErrorMessage
+        return -1
+    }
+    else { echo "reportgenerator already installed" }
+}
+
 echo "Starting Sonar for Library"
 
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null)
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" }
+	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.pullrequest.base="$env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$env:APPVEYOR_PULL_REQUEST_NUMBER " /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$env:APPVEYOR_REPO_NAME" /d:sonar.coverageReportPaths=".\testresults\SonarQube.xml" }
 }
 else 
 {
-	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" }
+	exec { & dotnet sonarscanner begin /d:sonar.login="$env:sonartoken" /key:"HodStudio.EntityFrameworkDiffLog" /o:"hodstudio-github" /d:sonar.sources=".\src\HodStudio.EntityFrameworkDiffLog" /d:sonar.host.url="https://sonarcloud.io" /version:"$completeVersion" /d:sonar.coverageReportPaths=".\testresults\SonarQube.xml" }
 }
 
 exec { & dotnet build $libraryOnlySolutionPath -c Release }
+
+dotnet test -c Release -s coverletArgs.runsettings -r ".\TestResults\"
+
+exec { & reportgenerator "-reports:TestResults\*\*.xml" "-targetdir:TestResults\" "-reporttypes:SonarQube" }
 
 exec { & dotnet sonarscanner end /d:sonar.login="$env:sonartoken" }
 
