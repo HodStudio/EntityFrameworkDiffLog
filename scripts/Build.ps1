@@ -65,7 +65,7 @@ Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDi
 Rename-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\App.Release.config" -NewName "HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll.config"
 
 echo "Tests 4.5 version"
-$($env:APPVEYOR_BUILD_FOLDER)\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe $($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result="$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml"
+.\packages\NUnit.ConsoleRunner.3.10.0\tools\nunit3-console.exe $($env:APPVEYOR_BUILD_FOLDER)\src\HodStudio.EntityFrameworkDiffLog.TestsDotNet45\bin\Release\HodStudio.EntityFrameworkDiffLog.TestsDotNet45.dll --result="$($env:APPVEYOR_BUILD_FOLDER)\TestResults\net45-results.xml"
 
 $net45Passed = $lastexitcode
 
